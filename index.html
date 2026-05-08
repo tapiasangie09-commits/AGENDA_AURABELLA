@@ -84,7 +84,7 @@
   <div id="app" class="h-full w-full overflow-auto sparkle"><!-- Navigation Tabs -->
    <header class="sticky top-0 z-50 glass border-b border-lila-200 px-4 py-3">
     <h1 id="salon-title" class="font-display text-2xl font-bold text-center text-purple-800 mb-2">✨ Aura Bella ✨</h1>
-    <nav class="flex gap-1 overflow-x-auto"><button onclick="showPage('calc')" id="tab-calc" class="tab-active px-3 py-2 rounded-full text-xs whitespace-nowrap transition-all"> 💅 Calculadora </button> <button onclick="showPage('agenda')" id="tab-agenda" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> 📅 Agenda </button> <button onclick="showPage('citas')" id="tab-citas" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> 📋 Citas </button>
+    <nav class="flex gap-1 overflow-x-auto"><button onclick="showPage('calc')" id="tab-calc" class="tab-active px-3 py-2 rounded-full text-xs whitespace-nowrap transition-all"> 💅 Nail Art </button> <button onclick="showPage('lash')" id="tab-lash" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> ✨ Lash &amp; Brow Art </button> <button onclick="showPage('agenda')" id="tab-agenda" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> 📅 Agenda </button> <button onclick="showPage('citas')" id="tab-citas" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> 📋 Citas </button>
     </nav>
    </header><!-- PAGE: Calculator -->
    <div id="page-calc" class="fade-in p-4 max-w-lg mx-auto pb-32"><!-- Running Total -->
@@ -126,7 +126,39 @@
      <p class="text-xs text-purple-500 mb-3">Puedes agregar varios.</p>
      <div class="grid grid-cols-1 gap-2" id="retiro-grid"></div>
      <div id="retiro-selected" class="mt-3 space-y-1"></div>
-    </section><!-- Pasar a Agenda --> <button onclick="passToAgenda()" class="w-full py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-400 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"> 📅 Agendar Cita → </button>
+    </section><!-- Pasar a Agenda -->
+    <div class="flex gap-2"><button onclick="passToAgenda()" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-400 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"> 📅 Agendar Cita </button> <button onclick="showPage('lash')" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-500 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"> ✨ Lash &amp; Brow </button>
+    </div>
+   </div><!-- PAGE: Lash & Brow Art -->
+   <div id="page-lash" class="fade-in p-4 max-w-lg mx-auto pb-32 hidden"><!-- Running Total -->
+    <div class="glass rounded-2xl p-4 mb-4 border border-lila-200 text-center sticky top-[105px] z-40">
+     <p class="text-sm text-purple-600">Total Servicio</p>
+     <p id="lash-running-total" class="font-display text-3xl font-bold text-purple-800">$0</p><button onclick="resetLash()" class="mt-2 text-xs text-purple-400 underline"> Limpiar todo </button>
+    </div><!-- Domicilio -->
+    <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-2">🏠 Domicilio</h3>
+     <div class="flex gap-2 mb-2"><button onclick="setLashDomicilio(true)" id="lash-dom-yes" class="btn-service flex-1 py-2 rounded-xl border-2 border-lila-200 text-sm font-semibold text-purple-700 bg-white"> Sí </button> <button onclick="setLashDomicilio(false)" id="lash-dom-no" class="btn-service flex-1 py-2 rounded-xl border-2 border-purple-400 text-sm font-semibold text-white bg-purple-400"> No </button>
+     </div>
+     <div id="lash-dom-price-wrap" class="hidden"><label class="text-xs text-purple-600">Precio domicilio (COP):</label> <input type="number" id="lash-dom-price" oninput="updateLashTotal()" placeholder="$0" class="w-full mt-1 p-2 rounded-xl border border-lila-200 text-sm focus:outline-none focus:border-purple-400">
+     </div>
+    </section><!-- Técnicas -->
+    <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-2">✨ Técnicas</h3>
+     <p class="text-xs text-purple-500 mb-2">Elige una o varias opciones. Puedes repetir.</p>
+     <p class="text-xs text-red-500 mb-3 font-semibold">⚠️ Asistir sin maquillaje</p>
+     <div class="grid grid-cols-1 gap-2" id="lash-tecnicas-grid"></div>
+     <div id="lash-tecnicas-selected" class="mt-3 space-y-1"></div>
+    </section><!-- Adicionales -->
+    <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-2">⭐ Adicionales</h3>
+     <div class="grid grid-cols-1 gap-2" id="lash-extras-grid"></div>
+     <div id="lash-extras-selected" class="mt-3 space-y-1"></div>
+    </section><!-- Retiro -->
+    <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-2">🧴 Retiro de Pestañas</h3>
+     <div class="grid grid-cols-1 gap-2" id="lash-retiro-grid"></div>
+     <div id="lash-retiro-selected" class="mt-3 space-y-1"></div>
+    </section><!-- Pasar a Agenda --> <button onclick="passLashToAgenda()" class="w-full py-3 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-500 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"> 📅 Agendar Cita → </button>
    </div><!-- PAGE: Agenda -->
    <div id="page-agenda" class="fade-in p-4 max-w-lg mx-auto pb-32 hidden">
     <div class="glass rounded-2xl p-4 mb-4 border border-lila-200">
@@ -166,12 +198,21 @@
       retiros: []
     };
 
+    let lashState = {
+      domicilio: false,
+      domPrice: 0,
+      tecnicas: [],
+      extras: [],
+      retiros: []
+    };
+
     let selectedDate = null;
     let selectedTime = null;
     let currentMonth = 0;
     let currentYear = 2026;
     let allAppointments = [];
     let currentCitasTab = 'agendadas';
+    let currentServiceType = 'calc'; // 'calc' o 'lash'
 
     // =====================
     // DATA CONSTANTS
@@ -217,6 +258,31 @@
       { name: 'Acrílico', price: 15000 }
     ];
 
+    const LASH_TECNICAS = [
+      { name: 'Pestañas Clásicas', price: 60000 },
+      { name: 'Pestañas con Volumen', price: 60000 },
+      { name: 'Lifting de pestañas', price: 50000 },
+      { name: 'Laminado de Cejas', price: 50000 },
+      { name: 'Cejas Semipermanentes con Henna', price: 20000 }
+    ];
+
+    const LASH_EXTRAS = [
+      { name: 'Pestañas de color', price: 6000, needsColor: true },
+      { name: 'Volumen 3D', price: 10000, needsColor: false },
+      { name: 'Volumen 4D', price: 12000, needsColor: false },
+      { name: 'Volumen 5D', price: 15000, needsColor: false },
+      { name: 'Volumen 6D', price: 20000, needsColor: false },
+      { name: 'Tinte Pestañas', price: 5000, needsColor: false },
+      { name: 'Cejas + diseño y depilación', price: 20000, needsColor: false }
+    ];
+
+    const LASH_RETIROS = [
+      { name: 'Sin retiro', price: 0 },
+      { name: 'Montura Completa', price: 15000 },
+      { name: 'Montura 50%', price: 10000 },
+      { name: 'Montura 20%', price: 5000 }
+    ];
+
     const TIMES = [
       '6:00 am', '7:00 am', '8:00 am', '9:00 am', '10:00 am', '11:00 am',
       '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm',
@@ -234,7 +300,7 @@
     // PAGE NAVIGATION
     // =====================
     function showPage(p) {
-      ['calc', 'agenda', 'citas'].forEach(x => {
+      ['calc', 'lash', 'agenda', 'citas'].forEach(x => {
         const page = document.getElementById('page-' + x);
         const tab = document.getElementById('tab-' + x);
         
@@ -514,7 +580,239 @@
     }
 
     function passToAgenda() {
-      document.getElementById('agenda-cost').value = fmt(getTotal());
+      currentServiceType = 'calc';
+      const calcTotal = getTotal();
+      const lashTotal = getLashTotal();
+      const combined = calcTotal + lashTotal;
+      document.getElementById('agenda-cost').value = fmt(combined);
+      showPage('agenda');
+    }
+
+    // =====================
+    // LASH & BROW: DOMICILIO
+    // =====================
+    function setLashDomicilio(v) {
+      lashState.domicilio = v;
+      
+      const yes = document.getElementById('lash-dom-yes');
+      const no = document.getElementById('lash-dom-no');
+
+      yes.classList.toggle('border-purple-400', v);
+      yes.classList.toggle('bg-purple-400', v);
+      yes.classList.toggle('text-white', v);
+      yes.classList.toggle('border-lila-200', !v);
+      yes.classList.toggle('bg-white', !v);
+      yes.classList.toggle('text-purple-700', !v);
+
+      no.classList.toggle('border-purple-400', !v);
+      no.classList.toggle('bg-purple-400', !v);
+      no.classList.toggle('text-white', !v);
+      no.classList.toggle('border-lila-200', v);
+      no.classList.toggle('bg-white', v);
+      no.classList.toggle('text-purple-700', v);
+
+      document.getElementById('lash-dom-price-wrap').classList.toggle('hidden', !v);
+      
+      if (!v) {
+        document.getElementById('lash-dom-price').value = '';
+        lashState.domPrice = 0;
+      }
+      
+      updateLashTotal();
+    }
+
+    // =====================
+    // LASH: TECNICAS
+    // =====================
+    function addLashTecnica(i) {
+      lashState.tecnicas.push({
+        ...LASH_TECNICAS[i],
+        id: Date.now() + Math.random()
+      });
+      renderLashTecnicas();
+      updateLashTotal();
+    }
+
+    function removeLashTecnica(id) {
+      lashState.tecnicas = lashState.tecnicas.filter(t => t.id !== id);
+      renderLashTecnicas();
+      updateLashTotal();
+    }
+
+    function renderLashTecnicas() {
+      const c = document.getElementById('lash-tecnicas-selected');
+      c.innerHTML = lashState.tecnicas.map(t => `
+        <div class="flex justify-between items-center bg-purple-50 rounded-lg px-3 py-1 text-xs">
+          <span>${t.name} - ${fmt(t.price)}</span>
+          <button onclick="removeLashTecnica(${t.id})" class="text-red-400 font-bold ml-2">✕</button>
+        </div>
+      `).join('');
+    }
+
+    // =====================
+    // LASH: EXTRAS
+    // =====================
+    function showLashExtraDialog(i) {
+      const e = LASH_EXTRAS[i];
+      let existing = document.getElementById('lash-extra-dialog');
+      if (existing) existing.remove();
+
+      let colorInput = '';
+      if (e.needsColor) {
+        colorInput = `
+          <div class="mb-4">
+            <label class="text-xs text-purple-600 block mb-2">¿Qué color?</label>
+            <input type="text" id="lash-extra-color" placeholder="ej: Rosa, Azul..." class="w-full p-2 rounded-xl border border-lila-200 text-sm focus:outline-none focus:border-purple-400">
+          </div>
+        `;
+      }
+
+      const div = document.createElement('div');
+      div.id = 'lash-extra-dialog';
+      div.className = 'fixed inset-0 z-[999] flex items-center justify-center bg-black/30';
+      div.innerHTML = `
+        <div class="bg-white rounded-2xl p-5 w-72 text-center shadow-xl">
+          <p class="font-bold text-purple-800 mb-2">${e.name}</p>
+          <p class="text-sm text-purple-600 mb-3">${fmt(e.price)}</p>
+          ${colorInput}
+          <div class="flex gap-2">
+            <button onclick="lashExtraDialogCancel()" class="flex-1 py-2 rounded-xl border border-lila-200 text-sm text-purple-600">Cancelar</button>
+            <button onclick="lashExtraDialogConfirm(${i})" class="flex-1 py-2 rounded-xl bg-purple-400 text-white text-sm font-bold">Agregar</button>
+          </div>
+        </div>
+      `;
+      document.body.appendChild(div);
+    }
+
+    function lashExtraDialogCancel() {
+      document.getElementById('lash-extra-dialog').remove();
+    }
+
+    function lashExtraDialogConfirm(i) {
+      const e = LASH_EXTRAS[i];
+      let color = '';
+      if (e.needsColor) {
+        color = document.getElementById('lash-extra-color').value.trim() || 'sin especificar';
+      }
+
+      lashState.extras.push({
+        ...e,
+        color: color,
+        id: Date.now() + Math.random()
+      });
+      renderLashExtras();
+      updateLashTotal();
+      document.getElementById('lash-extra-dialog').remove();
+    }
+
+    function removeLashExtra(id) {
+      lashState.extras = lashState.extras.filter(e => e.id !== id);
+      renderLashExtras();
+      updateLashTotal();
+    }
+
+    function renderLashExtras() {
+      const c = document.getElementById('lash-extras-selected');
+      c.innerHTML = lashState.extras.map(e => {
+        let label = e.name;
+        if (e.color) label += ` (${e.color})`;
+        return `
+          <div class="flex justify-between items-center bg-purple-50 rounded-lg px-3 py-1 text-xs">
+            <span>${label} - ${fmt(e.price)}</span>
+            <button onclick="removeLashExtra(${e.id})" class="text-red-400 font-bold ml-2">✕</button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // =====================
+    // LASH: RETIRO
+    // =====================
+    function addLashRetiro(i) {
+      if (i === 0) return; // sin retiro
+      
+      lashState.retiros.push({
+        ...LASH_RETIROS[i],
+        id: Date.now() + Math.random()
+      });
+      renderLashRetiro();
+      updateLashTotal();
+    }
+
+    function removeLashRetiro(id) {
+      lashState.retiros = lashState.retiros.filter(r => r.id !== id);
+      renderLashRetiro();
+      updateLashTotal();
+    }
+
+    function renderLashRetiro() {
+      const c = document.getElementById('lash-retiro-selected');
+      c.innerHTML = lashState.retiros.map(r => `
+        <div class="flex justify-between items-center bg-purple-50 rounded-lg px-3 py-1 text-xs">
+          <span>${r.name} - ${fmt(r.price)}</span>
+          <button onclick="removeLashRetiro(${r.id})" class="text-red-400 font-bold ml-2">✕</button>
+        </div>
+      `).join('');
+    }
+
+    // =====================
+    // LASH: TOTAL
+    // =====================
+    function getLashTotal() {
+      let t = 0;
+      t += lashState.domicilio ? (parseInt(document.getElementById('lash-dom-price').value) || 0) : 0;
+      t += lashState.tecnicas.reduce((s, x) => s + x.price, 0);
+      t += lashState.extras.reduce((s, x) => s + x.price, 0);
+      t += lashState.retiros.reduce((s, x) => s + x.price, 0);
+      return t;
+    }
+
+    function updateLashTotal() {
+      lashState.domPrice = parseInt(document.getElementById('lash-dom-price').value) || 0;
+      document.getElementById('lash-running-total').textContent = fmt(getLashTotal());
+    }
+
+    function resetLash() {
+      lashState = {
+        domicilio: false,
+        domPrice: 0,
+        tecnicas: [],
+        extras: [],
+        retiros: []
+      };
+      
+      setLashDomicilio(false);
+      renderLashTecnicas();
+      renderLashExtras();
+      renderLashRetiro();
+      updateLashTotal();
+    }
+
+    function getLashServicesSummary() {
+      let parts = [];
+      
+      if (lashState.tecnicas.length) {
+        parts.push('Técnicas: ' + lashState.tecnicas.map(t => t.name).join(', '));
+      }
+      if (lashState.extras.length) {
+        parts.push('Extras: ' + lashState.extras.map(e => e.name + (e.color ? ` (${e.color})` : '')).join(', '));
+      }
+      if (lashState.retiros.length) {
+        parts.push('Retiro: ' + lashState.retiros.map(r => r.name).join(', '));
+      }
+      if (lashState.domicilio) {
+        parts.push('Domicilio: ' + fmt(lashState.domPrice));
+      }
+      
+      return parts.join(' | ');
+    }
+
+    function passLashToAgenda() {
+      currentServiceType = 'lash';
+      const calcTotal = getTotal();
+      const lashTotal = getLashTotal();
+      const combined = calcTotal + lashTotal;
+      document.getElementById('agenda-cost').value = fmt(combined);
       showPage('agenda');
     }
 
@@ -627,6 +925,20 @@
 
       // Simular pequeño delay para feedback visual
       setTimeout(() => {
+        const calcTotal = getTotal();
+        const lashTotal = getLashTotal();
+        const totalPrice = calcTotal + lashTotal;
+        
+        const calcSummary = getServicesSummary();
+        const lashSummary = getLashServicesSummary();
+        let servicesSummary = '';
+        
+        if (calcSummary) servicesSummary += '💅 Nail: ' + calcSummary;
+        if (lashSummary) {
+          if (servicesSummary) servicesSummary += ' | ';
+          servicesSummary += '✨ Lash: ' + lashSummary;
+        }
+
         const appointment = {
           __backendId: 'apt_' + Date.now() + Math.random().toString(36).substr(2, 9),
           client_name: name,
@@ -634,9 +946,12 @@
           client_address: address,
           date: selectedDate,
           time: selectedTime,
-          total_price: getTotal(),
+          total_price: totalPrice,
+          nail_price: calcTotal,
+          lash_price: lashTotal,
           advance_payment: advance,
-          services_summary: getServicesSummary(),
+          services_summary: servicesSummary,
+          service_type: 'combined',
           status: 'agendada',
           created_at: new Date().toISOString()
         };
@@ -660,6 +975,7 @@
         renderCalendar();
         renderTimes();
         resetCalc();
+        resetLash();
         
         setTimeout(() => msg.classList.add('hidden'), 3000);
       }, 500);
@@ -741,29 +1057,83 @@
         const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
         const yearStart = new Date(now.getFullYear(), 0, 1);
 
-        const weekly = realizadas.filter(a => new Date(a.created_at) >= weekAgo);
-        const monthly = realizadas.filter(a => new Date(a.created_at) >= monthStart);
-        const yearly = realizadas.filter(a => new Date(a.created_at) >= yearStart);
+        // Calcular ganancias por tipo
+        const weeklyNail = realizadas.filter(a => new Date(a.created_at) >= weekAgo).reduce((s, a) => s + (a.nail_price || 0), 0);
+        const monthlyNail = realizadas.filter(a => new Date(a.created_at) >= monthStart).reduce((s, a) => s + (a.nail_price || 0), 0);
+        const yearlyNail = realizadas.filter(a => new Date(a.created_at) >= yearStart).reduce((s, a) => s + (a.nail_price || 0), 0);
 
-        const sumW = weekly.reduce((s, a) => s + a.total_price, 0);
-        const sumM = monthly.reduce((s, a) => s + a.total_price, 0);
-        const sumY = yearly.reduce((s, a) => s + a.total_price, 0);
+        const weeklyLash = realizadas.filter(a => new Date(a.created_at) >= weekAgo).reduce((s, a) => s + (a.lash_price || 0), 0);
+        const monthlyLash = realizadas.filter(a => new Date(a.created_at) >= monthStart).reduce((s, a) => s + (a.lash_price || 0), 0);
+        const yearlyLash = realizadas.filter(a => new Date(a.created_at) >= yearStart).reduce((s, a) => s + (a.lash_price || 0), 0);
+
+        const weeklyNailCount = realizadas.filter(a => new Date(a.created_at) >= weekAgo && a.nail_price > 0).length;
+        const monthlyNailCount = realizadas.filter(a => new Date(a.created_at) >= monthStart && a.nail_price > 0).length;
+        const yearlyNailCount = realizadas.filter(a => new Date(a.created_at) >= yearStart && a.nail_price > 0).length;
+
+        const weeklyLashCount = realizadas.filter(a => new Date(a.created_at) >= weekAgo && a.lash_price > 0).length;
+        const monthlyLashCount = realizadas.filter(a => new Date(a.created_at) >= monthStart && a.lash_price > 0).length;
+        const yearlyLashCount = realizadas.filter(a => new Date(a.created_at) >= yearStart && a.lash_price > 0).length;
 
         c.innerHTML = `
-          <div class="glass rounded-2xl p-4 mb-3 border border-lila-200 text-center">
-            <p class="text-xs text-purple-500">📅 Semanal</p>
-            <p class="font-display text-2xl font-bold text-purple-800">${fmt(sumW)}</p>
-            <p class="text-xs text-purple-400">${weekly.length} citas</p>
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <!-- LASH & BROW ART (Izquierda) -->
+            <div>
+              <p class="text-xs text-center text-pink-500 font-bold mb-2">✨ Lash & Brow</p>
+              <div class="glass rounded-2xl p-3 mb-2 border border-lila-200 text-center">
+                <p class="text-xs text-purple-500">📅 Semanal</p>
+                <p class="font-display text-lg font-bold text-purple-800">${fmt(weeklyLash)}</p>
+                <p class="text-xs text-purple-400">${weeklyLashCount} citas</p>
+              </div>
+              <div class="glass rounded-2xl p-3 mb-2 border border-lila-200 text-center">
+                <p class="text-xs text-purple-500">📅 Mensual</p>
+                <p class="font-display text-lg font-bold text-purple-800">${fmt(monthlyLash)}</p>
+                <p class="text-xs text-purple-400">${monthlyLashCount} citas</p>
+              </div>
+              <div class="glass rounded-2xl p-3 border border-lila-200 text-center">
+                <p class="text-xs text-purple-500">📅 Anual</p>
+                <p class="font-display text-lg font-bold text-purple-800">${fmt(yearlyLash)}</p>
+                <p class="text-xs text-purple-400">${yearlyLashCount} citas</p>
+              </div>
+            </div>
+
+            <!-- NAIL ART (Derecha) -->
+            <div>
+              <p class="text-xs text-center text-purple-600 font-bold mb-2">💅 Nail Art</p>
+              <div class="glass rounded-2xl p-3 mb-2 border border-lila-200 text-center">
+                <p class="text-xs text-purple-500">📅 Semanal</p>
+                <p class="font-display text-lg font-bold text-purple-800">${fmt(weeklyNail)}</p>
+                <p class="text-xs text-purple-400">${weeklyNailCount} citas</p>
+              </div>
+              <div class="glass rounded-2xl p-3 mb-2 border border-lila-200 text-center">
+                <p class="text-xs text-purple-500">📅 Mensual</p>
+                <p class="font-display text-lg font-bold text-purple-800">${fmt(monthlyNail)}</p>
+                <p class="text-xs text-purple-400">${monthlyNailCount} citas</p>
+              </div>
+              <div class="glass rounded-2xl p-3 border border-lila-200 text-center">
+                <p class="text-xs text-purple-500">📅 Anual</p>
+                <p class="font-display text-lg font-bold text-purple-800">${fmt(yearlyNail)}</p>
+                <p class="text-xs text-purple-400">${yearlyNailCount} citas</p>
+              </div>
+            </div>
           </div>
-          <div class="glass rounded-2xl p-4 mb-3 border border-lila-200 text-center">
-            <p class="text-xs text-purple-500">📅 Mensual</p>
-            <p class="font-display text-2xl font-bold text-purple-800">${fmt(sumM)}</p>
-            <p class="text-xs text-purple-400">${monthly.length} citas</p>
-          </div>
-          <div class="glass rounded-2xl p-4 mb-3 border border-lila-200 text-center">
-            <p class="text-xs text-purple-500">📅 Anual</p>
-            <p class="font-display text-2xl font-bold text-purple-800">${fmt(sumY)}</p>
-            <p class="text-xs text-purple-400">${yearly.length} citas</p>
+
+          <!-- TOTALES COMBINADOS -->
+          <div class="glass rounded-2xl p-4 border border-lila-200 text-center bg-gradient-to-r from-purple-50 to-pink-50">
+            <p class="text-xs text-purple-500 mb-3 font-bold">💰 TOTALES COMBINADOS</p>
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <p class="text-xs text-purple-500">Semanal</p>
+                <p class="font-display font-bold text-purple-800">${fmt(weeklyNail + weeklyLash)}</p>
+              </div>
+              <div>
+                <p class="text-xs text-purple-500">Mensual</p>
+                <p class="font-display font-bold text-purple-800">${fmt(monthlyNail + monthlyLash)}</p>
+              </div>
+              <div>
+                <p class="text-xs text-purple-500">Anual</p>
+                <p class="font-display font-bold text-purple-800">${fmt(yearlyNail + yearlyLash)}</p>
+              </div>
+            </div>
           </div>
         `;
       }
@@ -846,6 +1216,28 @@
 
       renderCalendar();
       renderTimes();
+
+      // Lash grids
+      document.getElementById('lash-tecnicas-grid').innerHTML = LASH_TECNICAS.map((t, i) => `
+        <button onclick="addLashTecnica(${i})" class="btn-service py-2 px-3 rounded-xl border border-lila-200 text-left text-xs font-semibold text-purple-700 bg-white hover:bg-purple-50 flex justify-between">
+          <span>${t.name}</span>
+          <span class="text-purple-400">${fmt(t.price)}</span>
+        </button>
+      `).join('');
+
+      document.getElementById('lash-extras-grid').innerHTML = LASH_EXTRAS.map((e, i) => `
+        <button onclick="showLashExtraDialog(${i})" class="btn-service py-2 px-3 rounded-xl border border-lila-200 text-left text-xs font-semibold text-purple-700 bg-white hover:bg-purple-50 flex justify-between">
+          <span>${e.name}</span>
+          <span class="text-purple-400">${fmt(e.price)}</span>
+        </button>
+      `).join('');
+
+      document.getElementById('lash-retiro-grid').innerHTML = LASH_RETIROS.map((r, i) => `
+        <button onclick="addLashRetiro(${i})" class="btn-service py-2 px-3 rounded-xl border border-lila-200 text-left text-xs font-semibold text-purple-700 bg-white hover:bg-purple-50 flex justify-between">
+          <span>${r.name}</span>
+          <span class="text-purple-400">${r.price ? fmt(r.price) : '-'}</span>
+        </button>
+      `).join('');
     }
 
     // =====================
@@ -863,5 +1255,5 @@
     initGrids();
     loadAppointments();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f869ba571c8f7b4',t:'MTc3ODIyMzg0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f86f03b1699f7b4',t:'MTc3ODIyNzMwNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
