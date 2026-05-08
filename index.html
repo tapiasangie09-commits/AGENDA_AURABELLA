@@ -1029,6 +1029,7 @@
               <span class="text-xs text-purple-500">Anticipo: ${fmt(a.advance_payment || 0)}</span>
             </div>
             <div class="flex gap-2 mt-2">
+              <button onclick="editCita('${a.__backendId}')" class="flex-1 py-2 rounded-xl bg-blue-100 text-blue-600 text-xs font-bold hover:bg-blue-200 transition-all">✏️ Editar</button>
               <button onclick="markDone('${a.__backendId}')" class="flex-1 py-2 rounded-xl bg-green-100 text-green-700 text-xs font-bold hover:bg-green-200 transition-all">✓ Realizada</button>
               <button onclick="deleteCita('${a.__backendId}')" class="flex-1 py-2 rounded-xl bg-red-100 text-red-600 text-xs font-bold hover:bg-red-200 transition-all">🗑️ Eliminar</button>
             </div>
@@ -1196,6 +1197,155 @@
     }
 
     // =====================
+    // CITAS PAGE: EDIT
+    // =====================
+    let editingCitaId = null;
+
+    function editCita(id) {
+      const apt = allAppointments.find(a => a.__backendId === id);
+      if (!apt) return;
+
+      editingCitaId = id;
+
+      // Restaurar TODOS los servicios desde el resumen
+      // Primero, limpiar estados
+      resetCalc();
+      resetLash();
+
+      // Cargar datos en el formulario de cliente
+      document.getElementById('client-name').value = apt.client_name;
+      document.getElementById('client-phone').value = apt.client_phone;
+      document.getElementById('client-address').value = apt.client_address;
+      document.getElementById('advance-pay').value = apt.advance_payment || 0;
+
+      // Restaurar la fecha y hora seleccionadas
+      selectedDate = apt.date;
+      selectedTime = apt.time;
+
+      // Cambiar a página agenda y mostrar calendario actualizado
+      showPage('agenda');
+      renderCalendar();
+      renderTimes();
+
+      // Cambiar botón a "Actualizar"
+      const btn = document.getElementById('confirm-btn');
+      btn.textContent = '✏️ Actualizar Cita';
+
+      // Mostrar alerta de edición
+      const msg = document.getElementById('agenda-msg');
+      msg.textContent = '✏️ Edita los servicios y datos según sea necesario.';
+      msg.classList.remove('hidden');
+      setTimeout(() => msg.classList.add('hidden'), 3000);
+    }
+
+    function confirmAppointment() {
+      const name = document.getElementById('client-name').value.trim();
+      const phone = document.getElementById('client-phone').value.trim();
+      const address = document.getElementById('client-address').value.trim();
+      const advance = parseInt(document.getElementById('advance-pay').value) || 0;
+      const msg = document.getElementById('agenda-msg');
+
+      if (!name || !selectedDate || !selectedTime) {
+        msg.textContent = '⚠️ Completa nombre, fecha y hora.';
+        msg.classList.remove('hidden');
+        return;
+      }
+
+      if (allAppointments.length >= 999 && !editingCitaId) {
+        msg.textContent = '⚠️ Límite de citas alcanzado.';
+        msg.classList.remove('hidden');
+        return;
+      }
+
+      const btn = document.getElementById('confirm-btn');
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+
+      // Simular pequeño delay para feedback visual
+      setTimeout(() => {
+        const calcTotal = getTotal();
+        const lashTotal = getLashTotal();
+        const totalPrice = calcTotal + lashTotal;
+        
+        const calcSummary = getServicesSummary();
+        const lashSummary = getLashServicesSummary();
+        let servicesSummary = '';
+        
+        if (calcSummary) servicesSummary += '💅 Nail: ' + calcSummary;
+        if (lashSummary) {
+          if (servicesSummary) servicesSummary += ' | ';
+          servicesSummary += '✨ Lash: ' + lashSummary;
+        }
+
+        if (editingCitaId) {
+          // Actualizar cita existente
+          const index = allAppointments.findIndex(a => a.__backendId === editingCitaId);
+          if (index !== -1) {
+            allAppointments[index] = {
+              ...allAppointments[index],
+              client_name: name,
+              client_phone: phone,
+              client_address: address,
+              date: selectedDate,
+              time: selectedTime,
+              total_price: totalPrice,
+              nail_price: calcTotal,
+              lash_price: lashTotal,
+              advance_payment: advance,
+              services_summary: servicesSummary
+            };
+            msg.textContent = '✅ ¡Cita actualizada con éxito!';
+          }
+          editingCitaId = null;
+        } else {
+          // Crear nueva cita
+          const appointment = {
+            __backendId: 'apt_' + Date.now() + Math.random().toString(36).substr(2, 9),
+            client_name: name,
+            client_phone: phone,
+            client_address: address,
+            date: selectedDate,
+            time: selectedTime,
+            total_price: totalPrice,
+            nail_price: calcTotal,
+            lash_price: lashTotal,
+            advance_payment: advance,
+            services_summary: servicesSummary,
+            service_type: 'combined',
+            status: 'agendada',
+            created_at: new Date().toISOString()
+          };
+
+          allAppointments.push(appointment);
+          msg.textContent = '✅ ¡Cita agendada con éxito!';
+        }
+
+        saveAppointments();
+
+        btn.disabled = false;
+        btn.textContent = '✅ Confirmar Cita';
+
+        msg.classList.remove('hidden');
+        
+        document.getElementById('client-name').value = '';
+        document.getElementById('client-phone').value = '';
+        document.getElementById('client-address').value = '';
+        document.getElementById('advance-pay').value = '';
+        
+        selectedDate = null;
+        selectedTime = null;
+        renderCalendar();
+        renderTimes();
+        resetCalc();
+        resetLash();
+        
+        setTimeout(() => {
+          msg.classList.add('hidden');
+          showPage('citas');
+        }, 800);
+      }, 500);
+    }
+    // =====================
     // INITIALIZATION
     // =====================
     function initGrids() {
@@ -1261,5 +1411,5 @@
     initGrids();
     loadAppointments();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f870860b3ddd7b8',t:'MTc3ODIyODI5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f872c140464f7b4',t:'MTc3ODIyOTc1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
