@@ -1,45 +1,34 @@
 <!doctype html>
 <html lang="es" class="h-full">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Aura Bella</title>
-
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-
-  <!-- Lucide Icons -->
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aura Bella</title><!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script><!-- Lucide Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script><!-- SDKs --> <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Quicksand:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"><!-- Tailwind Config -->
   <script>
     tailwind.config = {
       theme: {
         extend: {
           colors: {
-            lilac: {
+            lila: {
               50: '#faf5ff',
               100: '#f3e8ff',
               200: '#e9d5ff',
               300: '#d8b4fe',
               400: '#c084fc',
               500: '#a855f7',
-              600: '#9333ea'
-            },
-            baby: {
-              light: '#f5eeff',
-              main: '#e8d6ff',
-              dark: '#d4b3ff',
-              accent: '#b87aff'
+              baby: '#E8D4F8',
+              soft: '#F3E8FF',
+              mid: '#D4A8F0',
+              dark: '#9B59B6'
             }
           }
         }
       }
     }
-  </script>
-
+  </script><!-- Styles -->
   <style>
     body {
       font-family: 'Quicksand', sans-serif;
@@ -51,15 +40,22 @@
     }
 
     .glass {
-      background: rgba(255,255,255,0.85);
+      background: rgba(255, 255, 255, 0.85);
       backdrop-filter: blur(12px);
     }
 
-    .btn-active {
-      background: linear-gradient(135deg, #d8b4fe, #b87aff);
-      color: white;
-      transform: scale(1.02);
-      box-shadow: 0 4px 15px rgba(184,122,255,0.3);
+    .btn-service {
+      transition: all 0.2s;
+    }
+
+    .btn-service:active {
+      transform: scale(0.95);
+    }
+
+    .tab-active {
+      background: linear-gradient(135deg, #D4A8F0, #E8D4F8);
+      color: #4a1a6b;
+      font-weight: 700;
     }
 
     .fade-in {
@@ -68,1094 +64,804 @@
 
     @keyframes fadeIn {
       from {
-        opacity:0;
-        transform:translateY(10px);
+        opacity: 0;
+        transform: translateY(10px);
       }
-
       to {
-        opacity:1;
-        transform:translateY(0);
+        opacity: 1;
+        transform: translateY(0);
       }
     }
 
-    .nav-btn {
-      transition: all 0.2s;
-    }
-
-    .nav-btn:hover {
-      background: rgba(216,180,254,0.3);
-    }
-
-    .nav-btn.active {
-      background: linear-gradient(135deg, #d8b4fe, #b87aff);
-      color: white;
-    }
-
-    input[type="number"]::-webkit-inner-spin-button {
-      -webkit-appearance: none;
+    .sparkle {
+      background: linear-gradient(135deg, #F3E8FF 0%, #E8D4F8 30%, #fff 50%, #E8D4F8 70%, #F3E8FF 100%);
     }
   </style>
-</head>
-
-<body class="h-full bg-gradient-to-br from-baby-light via-white to-lilac-100 overflow-auto">
-
-<div id="app" class="w-full min-h-full flex flex-col">
-
-  <!-- Header -->
-  <header class="text-center py-6 px-4">
-    <h1 id="salon-title" class="font-display text-3xl md:text-4xl font-bold text-lilac-600">
-      ✨ Aura Bella ✨
-    </h1>
-
-    <p class="text-lilac-400 text-sm mt-1">
-      Nail Studio
-    </p>
-  </header>
-
-  <!-- Navigation -->
-  <nav class="flex justify-center gap-2 px-4 pb-4 flex-wrap">
-
-    <button
-      onclick="showPage('calculator')"
-      class="nav-btn active px-4 py-2 rounded-full text-sm font-semibold"
-      id="nav-calc"
-    >
-      💅 Calculadora
-    </button>
-
-    <button
-      onclick="showPage('agenda')"
-      class="nav-btn px-4 py-2 rounded-full text-sm font-semibold"
-      id="nav-agenda"
-    >
-      📅 Agenda
-    </button>
-
-    <button
-      onclick="showPage('citas')"
-      class="nav-btn px-4 py-2 rounded-full text-sm font-semibold"
-      id="nav-citas"
-    >
-      📋 Citas
-    </button>
-
-  </nav>
-
-  <!-- Pages -->
-  <main class="flex-1 px-4 pb-8">
-
-    <!-- CALCULATOR PAGE -->
-    <div id="page-calculator" class="max-w-lg mx-auto fade-in">
-
-      <!-- Technique Selection -->
-      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
-
-        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
-          1. Elige tu técnica
-        </h2>
-
-        <div class="grid grid-cols-2 gap-2" id="technique-btns">
-
-          <button onclick="selectTechnique(event,'softgel')" class="tech-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold hover:border-lilac-400 transition-all">
-            Soft Gel
-          </button>
-
-          <button onclick="selectTechnique(event,'semipermanente')" class="tech-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold hover:border-lilac-400 transition-all">
-            Gel Semipermanente
-          </button>
-
-          <button onclick="selectTechnique(event,'rubber')" class="tech-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold hover:border-lilac-400 transition-all">
-            Rubber Gel
-            <br>
-            <span class="text-xs text-lilac-400">$50.000</span>
-          </button>
-
-          <button onclick="selectTechnique(event,'builder')" class="tech-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold hover:border-lilac-400 transition-all">
-            Builder Gel
-            <br>
-            <span class="text-xs text-lilac-400">$60.000</span>
-          </button>
-
-          <button onclick="selectTechnique(event,'pedicure')" class="tech-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold hover:border-lilac-400 transition-all col-span-2">
-            Pedicure Spa
-            <br>
-            <span class="text-xs text-lilac-400">$20.000</span>
-          </button>
-
-        </div>
-      </div>
-
-      <!-- Sub Options -->
-      <div id="sub-options" class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100 hidden fade-in">
-
-        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
-          2. Opciones
-        </h2>
-
-        <div id="sub-options-content"></div>
-      </div>
-
-      <!-- Decorations -->
-      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
-
-        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
-          3. Decoraciones (por uña)
-        </h2>
-
-        <p class="text-xs text-lilac-400 mb-3">
-          Incluye 2 tonos lisos. Cada decoración extra tiene costo adicional.
-        </p>
-
-        <div class="space-y-2" id="decorations-list"></div>
-
-        <!-- Extra tones -->
-        <div class="mt-4 pt-4 border-t border-lilac-100">
-
-          <div class="flex items-center justify-between">
-
-            <span class="text-sm font-semibold text-lilac-600">
-              Tonos extra ($1.000 c/u)
-            </span>
-
-            <div class="flex items-center gap-2">
-
-              <button onclick="changeTones(-1)" class="w-7 h-7 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-600 font-bold">
-                -
-              </button>
-
-              <span id="extra-tones" class="font-bold text-lilac-600">
-                0
-              </span>
-
-              <button onclick="changeTones(1)" class="w-7 h-7 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-600 font-bold">
-                +
-              </button>
-
-            </div>
-          </div>
-        </div>
-
-        <!-- Shape -->
-        <div class="mt-3 pt-3 border-t border-lilac-100">
-
-          <div class="flex items-center justify-between">
-
-            <span class="text-sm font-semibold text-lilac-600">
-              Cambio de forma ($6.000)
-            </span>
-
-            <button
-              onclick="toggleShape()"
-              id="shape-btn"
-              class="px-4 py-1 rounded-full border-2 border-lilac-200 text-sm font-semibold transition-all"
-            >
-              No
-            </button>
-
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Retiro -->
-      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
-
-        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
-          4. Retiro
-        </h2>
-
-        <div class="grid grid-cols-2 gap-2">
-
-          <button onclick="selectRetiro(event,'none')" class="retiro-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold btn-active">
-            Sin retiro
-          </button>
-
-          <button onclick="selectRetiro(event,'softgel')" class="retiro-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
-            Soft Gel
-            <br>
-            <span class="text-xs">$13.000</span>
-          </button>
-
-          <button onclick="selectRetiro(event,'semi')" class="retiro-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
-            Semipermanente
-            <br>
-            <span class="text-xs">$6.000</span>
-          </button>
-
-          <button onclick="selectRetiro(event,'rubber')" class="retiro-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
-            Rubber
-            <br>
-            <span class="text-xs">$8.000</span>
-          </button>
-
-          <button onclick="selectRetiro(event,'builder')" class="retiro-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold col-span-2">
-            Builder Gel
-            <br>
-            <span class="text-xs">$8.000</span>
-          </button>
-
-        </div>
-      </div>
-
-      <!-- Total -->
-      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border-2 border-lilac-300">
-
-        <div class="text-center">
-
-          <p class="text-sm text-lilac-400">
-            Total estimado
-          </p>
-
-          <p id="total-price" class="font-display text-3xl font-bold text-lilac-600 mt-1">
-            $0
-          </p>
-
-        </div>
-
-        <button
-          onclick="goToAgendaWithPrice()"
-          class="w-full mt-4 py-3 rounded-xl bg-gradient-to-r from-lilac-300 to-baby-accent text-white font-bold shadow-lg hover:shadow-xl transition-all"
-        >
-          📅 Agendar Cita
-        </button>
-
-      </div>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full">
+  <div id="app" class="h-full w-full overflow-auto sparkle"><!-- Navigation Tabs -->
+   <header class="sticky top-0 z-50 glass border-b border-lila-200 px-4 py-3">
+    <h1 id="salon-title" class="font-display text-2xl font-bold text-center text-purple-800 mb-2">✨ Aura Bella ✨</h1>
+    <nav class="flex gap-1 overflow-x-auto"><button onclick="showPage('calc')" id="tab-calc" class="tab-active px-3 py-2 rounded-full text-xs whitespace-nowrap transition-all"> 💅 Calculadora </button> <button onclick="showPage('agenda')" id="tab-agenda" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> 📅 Agenda </button> <button onclick="showPage('citas')" id="tab-citas" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> 📋 Citas </button>
+    </nav>
+   </header><!-- PAGE: Calculator -->
+   <div id="page-calc" class="fade-in p-4 max-w-lg mx-auto pb-32"><!-- Running Total -->
+    <div class="glass rounded-2xl p-4 mb-4 border border-lila-200 text-center sticky top-[105px] z-40">
+     <p class="text-sm text-purple-600">Total Servicio</p>
+     <p id="running-total" class="font-display text-3xl font-bold text-purple-800">$0</p><button onclick="resetCalc()" class="mt-2 text-xs text-purple-400 underline"> Limpiar todo </button>
+    </div><!-- Domicilio -->
+    <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-2">🏠 Domicilio</h3>
+     <div class="flex gap-2 mb-2"><button onclick="setDomicilio(true)" id="dom-yes" class="btn-service flex-1 py-2 rounded-xl border-2 border-lila-200 text-sm font-semibold text-purple-700 bg-white"> Sí </button> <button onclick="setDomicilio(false)" id="dom-no" class="btn-service flex-1 py-2 rounded-xl border-2 border-purple-400 text-sm font-semibold text-white bg-purple-400"> No </button>
+     </div>
+     <div id="dom-price-wrap" class="hidden"><label class="text-xs text-purple-600">Precio domicilio (COP):</label> <input type="number" id="dom-price" oninput="updateTotal()" placeholder="$0" class="w-full mt-1 p-2 rounded-xl border border-lila-200 text-sm focus:outline-none focus:border-purple-400">
+     </div>
+    </section><!-- Técnicas -->
+    <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-1">💅 Técnicas</h3>
+     <p class="text-xs text-purple-500 mb-3">Incluye 2 tonos lisos. Puedes agregar varias veces.</p>
+     <div class="grid grid-cols-1 gap-2" id="tecnicas-grid"></div>
+     <div id="tecnicas-selected" class="mt-3 space-y-1"></div>
+    </section><!-- Decoraciones -->
+    <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-1">🎨 Decoraciones (por uña)</h3>
+     <p class="text-xs text-purple-500 mb-3">Selecciona y elige cantidad de uñas.</p>
+     <div class="grid grid-cols-2 gap-2" id="deco-grid"></div>
+     <div id="deco-selected" class="mt-3 space-y-1"></div>
+    </section><!-- Tonos Extras -->
+    <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-2">🎨 Tonos Extras ($500 c/u)</h3>
+     <div class="flex items-center gap-3"><button onclick="changeTonos(-1)" class="w-9 h-9 rounded-full bg-purple-200 text-purple-800 font-bold text-lg"> − </button> <span id="tonos-count" class="text-xl font-bold text-purple-800">0</span> <button onclick="changeTonos(1)" class="w-9 h-9 rounded-full bg-purple-400 text-white font-bold text-lg"> + </button>
+     </div>
+    </section><!-- Cambio de Forma -->
+    <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-2">✂️ Cambio de Forma ($6.000)</h3>
+     <div class="flex gap-2"><button onclick="setForma(true)" id="forma-yes" class="btn-service flex-1 py-2 rounded-xl border-2 border-lila-200 text-sm font-semibold text-purple-700 bg-white"> Sí </button> <button onclick="setForma(false)" id="forma-no" class="btn-service flex-1 py-2 rounded-xl border-2 border-purple-400 text-sm font-semibold text-white bg-purple-400"> No </button>
+     </div>
+    </section><!-- Retiro -->
+    <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-1">🧴 Retiro</h3>
+     <p class="text-xs text-purple-500 mb-3">Puedes agregar varios.</p>
+     <div class="grid grid-cols-1 gap-2" id="retiro-grid"></div>
+     <div id="retiro-selected" class="mt-3 space-y-1"></div>
+    </section><!-- Pasar a Agenda --> <button onclick="passToAgenda()" class="w-full py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-400 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"> 📅 Agendar Cita → </button>
+   </div><!-- PAGE: Agenda -->
+   <div id="page-agenda" class="fade-in p-4 max-w-lg mx-auto pb-32 hidden">
+    <div class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-3">📅 Calendario 2026</h3>
+     <div class="flex items-center justify-between mb-3"><button onclick="changeMonth(-1)" class="w-8 h-8 rounded-full bg-purple-200 text-purple-800 font-bold"> ‹ </button> <span id="month-label" class="font-bold text-purple-800"></span> <button onclick="changeMonth(1)" class="w-8 h-8 rounded-full bg-purple-200 text-purple-800 font-bold"> › </button>
+     </div>
+     <div class="grid grid-cols-7 gap-1 text-center text-xs text-purple-600 mb-1"><span>Do</span> <span>Lu</span> <span>Ma</span> <span>Mi</span> <span>Ju</span> <span>Vi</span> <span>Sa</span>
+     </div>
+     <div id="calendar-grid" class="grid grid-cols-7 gap-1"></div>
+    </div><!-- Time Selection -->
+    <div class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-3">🕐 Horario</h3>
+     <div id="time-grid" class="grid grid-cols-3 gap-2"></div>
+    </div><!-- Client Info -->
+    <div class="glass rounded-2xl p-4 mb-4 border border-lila-200">
+     <h3 class="font-display font-bold text-purple-800 mb-3">👤 Datos del Cliente</h3><label class="text-xs text-purple-600">Nombre</label> <input type="text" id="client-name" class="w-full p-2 rounded-xl border border-lila-200 text-sm mb-2 focus:outline-none focus:border-purple-400"> <label class="text-xs text-purple-600">Teléfono</label> <input type="tel" id="client-phone" class="w-full p-2 rounded-xl border border-lila-200 text-sm mb-2 focus:outline-none focus:border-purple-400"> <label class="text-xs text-purple-600">Dirección</label> <input type="text" id="client-address" placeholder="Calle, número, apto..." class="w-full p-2 rounded-xl border border-lila-200 text-sm mb-2 focus:outline-none focus:border-purple-400"> <label class="text-xs text-purple-600">Costo Total</label> <input type="text" id="agenda-cost" readonly class="w-full p-2 rounded-xl border border-lila-200 text-sm mb-2 bg-purple-50 font-bold text-purple-800"> <label class="text-xs text-purple-600">Anticipo (COP)</label> <input type="number" id="advance-pay" placeholder="$0" class="w-full p-2 rounded-xl border border-lila-200 text-sm mb-2 focus:outline-none focus:border-purple-400">
+    </div><button onclick="confirmAppointment()" id="confirm-btn" class="w-full py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-400 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"> ✅ Confirmar Cita </button>
+    <div id="agenda-msg" class="mt-3 text-center text-sm text-purple-600 hidden"></div>
+   </div><!-- PAGE: Citas --> <!-- PAGE: Citas -->
+   <div id="page-citas" class="fade-in p-4 max-w-lg mx-auto pb-32 hidden">
+    <div class="flex gap-2 mb-4"><button onclick="showCitasTab('agendadas')" id="ct-agendadas" class="flex-1 py-2 rounded-xl text-xs font-bold bg-purple-400 text-white"> Agendadas </button> <button onclick="showCitasTab('realizadas')" id="ct-realizadas" class="flex-1 py-2 rounded-xl text-xs font-bold bg-white/60 text-purple-700 border border-lila-200"> Realizadas </button> <button onclick="showCitasTab('ganancias')" id="ct-ganancias" class="flex-1 py-2 rounded-xl text-xs font-bold bg-white/60 text-purple-700 border border-lila-200"> Ganancias </button>
     </div>
-
-    <!-- AGENDA -->
-    <div id="page-agenda" class="max-w-lg mx-auto hidden fade-in">
-
-      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
-
-        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
-          📅 Calendario 2026
-        </h2>
-
-        <div class="flex items-center justify-between mb-3">
-
-          <button onclick="changeMonth(-1)" class="p-2 rounded-full hover:bg-lilac-100">
-            <i data-lucide="chevron-left" class="w-5 h-5 text-lilac-600"></i>
-          </button>
-
-          <span id="month-label" class="font-bold text-lilac-600"></span>
-
-          <button onclick="changeMonth(1)" class="p-2 rounded-full hover:bg-lilac-100">
-            <i data-lucide="chevron-right" class="w-5 h-5 text-lilac-600"></i>
-          </button>
-
-        </div>
-
-        <div class="grid grid-cols-7 gap-1 text-center text-xs mb-1">
-          <span class="text-lilac-400 font-semibold">Do</span>
-          <span class="text-lilac-400 font-semibold">Lu</span>
-          <span class="text-lilac-400 font-semibold">Ma</span>
-          <span class="text-lilac-400 font-semibold">Mi</span>
-          <span class="text-lilac-400 font-semibold">Ju</span>
-          <span class="text-lilac-400 font-semibold">Vi</span>
-          <span class="text-lilac-400 font-semibold">Sa</span>
-        </div>
-
-        <div id="calendar-grid" class="grid grid-cols-7 gap-1"></div>
-
-      </div>
-
-      <!-- Time -->
-      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
-
-        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
-          🕐 Horario
-        </h2>
-
-        <div class="grid grid-cols-3 gap-2">
-
-          <button onclick="selectTime(event,'8:00 am')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">8:00 am</button>
-
-          <button onclick="selectTime(event,'10:00 am')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">10:00 am</button>
-
-          <button onclick="selectTime(event,'12:00 pm')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">12:00 pm</button>
-
-          <button onclick="selectTime(event,'2:00 pm')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">2:00 pm</button>
-
-          <button onclick="selectTime(event,'4:00 pm')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">4:00 pm</button>
-
-          <button onclick="selectTime(event,'6:00 pm')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">6:00 pm</button>
-
-          <button onclick="selectTime(event,'8:00 pm')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold col-span-3">8:00 pm</button>
-
-        </div>
-      </div>
-
-      <!-- Client Info -->
-      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
-
-        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
-          👤 Datos del Cliente
-        </h2>
-
-        <div class="space-y-3">
-
-          <div>
-            <label class="text-sm font-semibold text-lilac-500">
-              Nombre
-            </label>
-
-            <input
-              id="client-name"
-              type="text"
-              class="w-full mt-1 p-3 rounded-xl border-2 border-lilac-200 focus:border-lilac-400 outline-none"
-              placeholder="Nombre del cliente"
-            >
-          </div>
-
-          <div>
-            <label class="text-sm font-semibold text-lilac-500">
-              Número de contacto
-            </label>
-
-            <input
-              id="client-phone"
-              type="text"
-              class="w-full mt-1 p-3 rounded-xl border-2 border-lilac-200 focus:border-lilac-400 outline-none"
-              placeholder="Teléfono"
-            >
-          </div>
-
-          <div>
-            <label class="text-sm font-semibold text-lilac-500">
-              Costo/Precio
-            </label>
-
-            <input
-              id="appt-price"
-              type="text"
-              class="w-full mt-1 p-3 rounded-xl border-2 border-lilac-200 bg-lilac-50 outline-none"
-              readonly
-            >
-          </div>
-
-          <div>
-            <label class="text-sm font-semibold text-lilac-500">
-              Anticipo
-            </label>
-
-            <input
-              id="appt-advance"
-              type="number"
-              class="w-full mt-1 p-3 rounded-xl border-2 border-lilac-200 focus:border-lilac-400 outline-none"
-              placeholder="$0"
-            >
-          </div>
-
-        </div>
-
-        <button
-          onclick="confirmAppointment()"
-          id="confirm-btn"
-          class="w-full mt-4 py-3 rounded-xl bg-gradient-to-r from-lilac-300 to-baby-accent text-white font-bold shadow-lg hover:shadow-xl transition-all"
-        >
-          ✅ Confirmar Cita
-        </button>
-
-        <p id="confirm-msg" class="text-center text-sm mt-2 text-green-500 font-semibold hidden"></p>
-
-      </div>
-    </div>
-
-    <!-- CITAS -->
-    <div id="page-citas" class="max-w-lg mx-auto hidden fade-in">
-
-      <div class="flex gap-2 mb-4">
-
-        <button onclick="showCitasTab('agendadas')" id="tab-agendadas" class="flex-1 py-2 rounded-xl text-sm font-bold nav-btn active">
-          Agendadas
-        </button>
-
-        <button onclick="showCitasTab('realizadas')" id="tab-realizadas" class="flex-1 py-2 rounded-xl text-sm font-bold nav-btn">
-          Realizadas
-        </button>
-
-        <button onclick="showCitasTab('ganancias')" id="tab-ganancias" class="flex-1 py-2 rounded-xl text-sm font-bold nav-btn">
-          Ganancias
-        </button>
-
-      </div>
-
-      <div id="citas-content" class="space-y-3"></div>
-
-    </div>
-
-  </main>
-</div>
-
-<script>
-
-  // =========================
-  // STATE
-  // =========================
-
-  let currentPage = 'calculator';
-  let selectedTechnique = null;
-  let selectedSubOption = null;
-  let techniquePrice = 0;
-  let decorations = {};
-  let extraTones = 0;
-  let shapeChange = false;
-  let selectedRetiro = 'none';
-  let retiroPrice = 0;
-  let selectedDate = null;
-  let selectedTime = null;
-  let currentMonth = 0;
-  let currentYear = 2026;
-
-  // LOCAL STORAGE
-  let allAppointments = JSON.parse(localStorage.getItem('appointments')) || [];
-
-  const retiroPrices = {
-    none: 0,
-    softgel: 13000,
-    semi: 6000,
-    rubber: 8000,
-    builder: 8000
-  };
-
-  const decorationsList = [
-    { id:'espejo', name:'Espejo', price:2000 },
-    { id:'aurora', name:'Aurora', price:2000 },
-    { id:'perla', name:'Perla', price:2000 },
-    { id:'carey', name:'Carey', price:5000 },
-    { id:'blooming', name:'Blooming', price:5000 },
-    { id:'ojogato', name:'Ojo de gato', price:3000 },
-    { id:'relievecomp', name:'Relieve complicado', price:8000 },
-    { id:'relievesimp', name:'Relieve simple', price:5000 },
-    { id:'3d', name:'3D', price:10000 },
-    { id:'frances', name:'Francés', price:1000 },
-    { id:'nailsimple', name:'Nail art simple', price:2000 },
-    { id:'nailcomp', name:'Nail art complicado', price:8000 },
-    { id:'encapsulado', name:'Encapsulado', price:8000 },
-    { id:'naturaleza', name:'Naturaleza muerta', price:5000 },
-    { id:'dijes', name:'Dijes', price:8000 },
-    { id:'stikers', name:'Stikers', price:1000 },
-    { id:'babyboomer', name:'Baby boomer', price:10000 },
-    { id:'spider', name:'Gel spider', price:2000 },
-    { id:'hojaoro', name:'Hoja de oro', price:2000 }
-  ];
-
-  // =========================
-  // DECORATIONS
-  // =========================
-
-  function renderDecorations() {
-
-    const container = document.getElementById('decorations-list');
-
-    container.innerHTML = decorationsList.map(d => `
-      <div class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-lilac-50 transition-all">
-
-        <div>
-          <span class="text-sm font-semibold text-gray-700">
-            ${d.name}
-          </span>
-
-          <span class="text-xs text-lilac-400 ml-2">
-            $${d.price.toLocaleString()}/uña
-          </span>
-        </div>
-
-        <div class="flex items-center gap-2">
-
-          <button onclick="changeDeco('${d.id}',-1)" class="w-6 h-6 rounded-full bg-lilac-100 flex items-center justify-center text-lilac-600 font-bold text-xs">
-            -
-          </button>
-
-          <span id="deco-${d.id}" class="text-sm font-bold text-lilac-600 w-4 text-center">
-            0
-          </span>
-
-          <button onclick="changeDeco('${d.id}',1)" class="w-6 h-6 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-600 font-bold text-xs">
-            +
-          </button>
-
-        </div>
-      </div>
-    `).join('');
-  }
-
-  function changeDeco(id, delta) {
-
-    if (!decorations[id]) {
-      decorations[id] = 0;
+    <div id="citas-content"></div>
+   </div>
+  </div>
+  <script>
+    // =====================
+    // STATE MANAGEMENT
+    // =====================
+    let calcState = {
+      domicilio: false,
+      domPrice: 0,
+      tecnicas: [],
+      decoraciones: [],
+      tonos: 0,
+      forma: false,
+      retiros: []
+    };
+
+    let selectedDate = null;
+    let selectedTime = null;
+    let currentMonth = 0;
+    let currentYear = 2026;
+    let allAppointments = [];
+    let currentCitasTab = 'agendadas';
+
+    // =====================
+    // DATA CONSTANTS
+    // =====================
+    const TECNICAS = [
+      { name: 'Manicure Spa', price: 17000 },
+      { name: 'Pedicure Spa', price: 20000 },
+      { name: 'Manicure Semipermanente', price: 40000 },
+      { name: 'Pedicure Semipermanente', price: 40000 },
+      { name: 'Rubber Gel', price: 50000 },
+      { name: 'Builder Gel', price: 60000 },
+      { name: 'Soft Gel', price: 70000 }
+    ];
+
+    const DECORACIONES = [
+      { name: 'Espejo', price: 200 },
+      { name: 'Aurora', price: 200 },
+      { name: 'Perla', price: 200 },
+      { name: 'Carey', price: 500 },
+      { name: 'Blooming', price: 500 },
+      { name: 'Ojo de gato', price: 200 },
+      { name: 'Relieve complicado', price: 800 },
+      { name: 'Relieve simple', price: 500 },
+      { name: '3D', price: 1000 },
+      { name: 'Francés', price: 200 },
+      { name: 'Nail art simple', price: 200 },
+      { name: 'Nail art complicado', price: 600 },
+      { name: 'Encapsulado', price: 1000 },
+      { name: 'Naturaleza muerta', price: 800 },
+      { name: 'Dijes', price: 500 },
+      { name: 'Stickers', price: 100 },
+      { name: 'Baby boomer', price: 800 },
+      { name: 'Gel spider', price: 200 },
+      { name: 'Hoja de oro', price: 200 }
+    ];
+
+    const RETIROS = [
+      { name: 'Sin retiro', price: 0 },
+      { name: 'Gel Semipermanente', price: 8000 },
+      { name: 'Rubber', price: 8000 },
+      { name: 'Builder Gel', price: 10000 },
+      { name: 'Soft Gel', price: 12000 },
+      { name: 'Acrílico', price: 15000 }
+    ];
+
+    const TIMES = [
+      '6:00 am', '7:00 am', '8:00 am', '9:00 am', '10:00 am', '11:00 am',
+      '12:00 pm', '1:00 pm', '2:00 pm', '3:00 pm', '4:00 pm', '5:00 pm',
+      '6:00 pm', '7:00 pm', '8:00 pm', '9:00 pm', '10:00 pm', '11:00 pm'
+    ];
+
+    // =====================
+    // UTILITY FUNCTIONS
+    // =====================
+    function fmt(n) {
+      return '$' + n.toLocaleString('es-CO');
     }
 
-    decorations[id] = Math.max(0, decorations[id] + delta);
+    // =====================
+    // PAGE NAVIGATION
+    // =====================
+    function showPage(p) {
+      ['calc', 'agenda', 'citas'].forEach(x => {
+        const page = document.getElementById('page-' + x);
+        const tab = document.getElementById('tab-' + x);
+        
+        page.classList.toggle('hidden', x !== p);
+        tab.classList.toggle('tab-active', x === p);
+        
+        if (x !== p) {
+          tab.classList.add('bg-white/60');
+        } else {
+          tab.classList.remove('bg-white/60');
+        }
+      });
 
-    document.getElementById(`deco-${id}`).textContent = decorations[id];
-
-    calculateTotal();
-  }
-
-  function changeTones(delta) {
-
-    extraTones = Math.max(0, extraTones + delta);
-
-    document.getElementById('extra-tones').textContent = extraTones;
-
-    calculateTotal();
-  }
-
-  function toggleShape() {
-
-    shapeChange = !shapeChange;
-
-    const btn = document.getElementById('shape-btn');
-
-    if (shapeChange) {
-      btn.textContent = 'Sí';
-      btn.classList.add('btn-active');
-    } else {
-      btn.textContent = 'No';
-      btn.classList.remove('btn-active');
+      if (p === 'citas') {
+        renderCitas();
+      }
     }
 
-    calculateTotal();
-  }
+    // =====================
+    // CALCULATOR: DOMICILIO
+    // =====================
+    function setDomicilio(v) {
+      calcState.domicilio = v;
+      
+      const yes = document.getElementById('dom-yes');
+      const no = document.getElementById('dom-no');
 
-  // =========================
-  // TECHNIQUES
-  // =========================
+      yes.classList.toggle('border-purple-400', v);
+      yes.classList.toggle('bg-purple-400', v);
+      yes.classList.toggle('text-white', v);
+      yes.classList.toggle('border-lila-200', !v);
+      yes.classList.toggle('bg-white', !v);
+      yes.classList.toggle('text-purple-700', !v);
 
-  function selectTechnique(e, tech) {
+      no.classList.toggle('border-purple-400', !v);
+      no.classList.toggle('bg-purple-400', !v);
+      no.classList.toggle('text-white', !v);
+      no.classList.toggle('border-lila-200', v);
+      no.classList.toggle('bg-white', v);
+      no.classList.toggle('text-purple-700', v);
 
-    selectedTechnique = tech;
-    selectedSubOption = null;
+      document.getElementById('dom-price-wrap').classList.toggle('hidden', !v);
+      
+      if (!v) {
+        document.getElementById('dom-price').value = '';
+        calcState.domPrice = 0;
+      }
+      
+      updateTotal();
+    }
 
-    document.querySelectorAll('.tech-btn').forEach(btn => {
-      btn.classList.remove('btn-active');
-    });
+    // =====================
+    // CALCULATOR: FORMA
+    // =====================
+    function setForma(v) {
+      calcState.forma = v;
+      
+      const yes = document.getElementById('forma-yes');
+      const no = document.getElementById('forma-no');
 
-    e.currentTarget.classList.add('btn-active');
+      yes.classList.toggle('border-purple-400', v);
+      yes.classList.toggle('bg-purple-400', v);
+      yes.classList.toggle('text-white', v);
+      yes.classList.toggle('border-lila-200', !v);
+      yes.classList.toggle('bg-white', !v);
+      yes.classList.toggle('text-purple-700', !v);
 
-    const subDiv = document.getElementById('sub-options');
-    const content = document.getElementById('sub-options-content');
+      no.classList.toggle('border-purple-400', !v);
+      no.classList.toggle('bg-purple-400', !v);
+      no.classList.toggle('text-white', !v);
+      no.classList.toggle('border-lila-200', v);
+      no.classList.toggle('bg-white', v);
+      no.classList.toggle('text-purple-700', v);
 
-    if (tech === 'softgel') {
+      updateTotal();
+    }
 
-      subDiv.classList.remove('hidden');
+    // =====================
+    // CALCULATOR: TONOS
+    // =====================
+    function changeTonos(d) {
+      calcState.tonos = Math.max(0, calcState.tonos + d);
+      document.getElementById('tonos-count').textContent = calcState.tonos;
+      updateTotal();
+    }
 
-      content.innerHTML = `
-        <p class="text-sm text-lilac-400 mb-2">
-          Selecciona el largo:
-        </p>
+    // =====================
+    // CALCULATOR: TECNICAS
+    // =====================
+    function addTecnica(i) {
+      calcState.tecnicas.push({
+        ...TECNICAS[i],
+        id: Date.now() + Math.random()
+      });
+      renderSelectedTecnicas();
+      updateTotal();
+    }
 
-        <div class="grid grid-cols-2 gap-2">
+    function removeTecnica(id) {
+      calcState.tecnicas = calcState.tecnicas.filter(t => t.id !== id);
+      renderSelectedTecnicas();
+      updateTotal();
+    }
 
-          <button onclick="selectSub(event,'l1',70000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
-            Largo 1
-            <br>
-            <span class="text-xs text-lilac-400">$70.000</span>
-          </button>
+    function renderSelectedTecnicas() {
+      const c = document.getElementById('tecnicas-selected');
+      c.innerHTML = calcState.tecnicas.map(t => `
+        <div class="flex justify-between items-center bg-purple-50 rounded-lg px-3 py-1 text-xs">
+          <span>${t.name} - ${fmt(t.price)}</span>
+          <button onclick="removeTecnica(${t.id})" class="text-red-400 font-bold ml-2">✕</button>
+        </div>
+      `).join('');
+    }
 
-          <button onclick="selectSub(event,'l2',71000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
-            Largo 2
-            <br>
-            <span class="text-xs text-lilac-400">$71.000</span>
-          </button>
+    // =====================
+    // CALCULATOR: DECORACIONES
+    // =====================
+    function showDecoDialog(i) {
+      const d = DECORACIONES[i];
+      let existing = document.getElementById('deco-dialog');
+      if (existing) existing.remove();
 
-          <button onclick="selectSub(event,'l3',72000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
-            Largo 3
-            <br>
-            <span class="text-xs text-lilac-400">$72.000</span>
-          </button>
-
-          <button onclick="selectSub(event,'l4',73000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
-            Largo 4
-            <br>
-            <span class="text-xs text-lilac-400">$73.000</span>
-          </button>
-
+      const div = document.createElement('div');
+      div.id = 'deco-dialog';
+      div.className = 'fixed inset-0 z-[999] flex items-center justify-center bg-black/30';
+      div.innerHTML = `
+        <div class="bg-white rounded-2xl p-5 w-72 text-center shadow-xl">
+          <p class="font-bold text-purple-800 mb-2">${d.name} (${fmt(d.price)}/uña)</p>
+          <p class="text-xs text-purple-500 mb-3">¿Cuántas uñas?</p>
+          <div class="flex items-center justify-center gap-4 mb-4">
+            <button onclick="decoDialogChange(-1)" class="w-9 h-9 rounded-full bg-purple-200 text-purple-800 font-bold text-lg">−</button>
+            <span id="deco-dialog-count" class="text-2xl font-bold text-purple-800">1</span>
+            <button onclick="decoDialogChange(1)" class="w-9 h-9 rounded-full bg-purple-400 text-white font-bold text-lg">+</button>
+          </div>
+          <div class="flex gap-2">
+            <button onclick="decoDialogCancel()" class="flex-1 py-2 rounded-xl border border-lila-200 text-sm text-purple-600">Cancelar</button>
+            <button onclick="decoDialogConfirm(${i})" class="flex-1 py-2 rounded-xl bg-purple-400 text-white text-sm font-bold">Agregar</button>
+          </div>
         </div>
       `;
+      document.body.appendChild(div);
+    }
 
-      techniquePrice = 0;
+    window._decoCount = 1;
 
-    } else if (tech === 'semipermanente') {
+    function decoDialogChange(d) {
+      window._decoCount = Math.max(1, Math.min(10, window._decoCount + d));
+      document.getElementById('deco-dialog-count').textContent = window._decoCount;
+    }
 
-      subDiv.classList.remove('hidden');
+    function decoDialogCancel() {
+      document.getElementById('deco-dialog').remove();
+      window._decoCount = 1;
+    }
 
-      content.innerHTML = `
-        <div class="grid grid-cols-2 gap-2">
+    function decoDialogConfirm(i) {
+      const d = DECORACIONES[i];
+      calcState.decoraciones.push({
+        ...d,
+        nails: window._decoCount,
+        id: Date.now() + Math.random()
+      });
+      renderSelectedDeco();
+      updateTotal();
+      document.getElementById('deco-dialog').remove();
+      window._decoCount = 1;
+    }
 
-          <button onclick="selectSub(event,'manos',40000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
-            Manos
-            <br>
-            <span class="text-xs text-lilac-400">$40.000</span>
-          </button>
+    function removeDeco(id) {
+      calcState.decoraciones = calcState.decoraciones.filter(d => d.id !== id);
+      renderSelectedDeco();
+      updateTotal();
+    }
 
-          <button onclick="selectSub(event,'pies',38000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
-            Pies
-            <br>
-            <span class="text-xs text-lilac-400">$38.000</span>
-          </button>
-
+    function renderSelectedDeco() {
+      const c = document.getElementById('deco-selected');
+      c.innerHTML = calcState.decoraciones.map(d => `
+        <div class="flex justify-between items-center bg-purple-50 rounded-lg px-3 py-1 text-xs">
+          <span>${d.name} x${d.nails} uñas = ${fmt(d.price * d.nails)}</span>
+          <button onclick="removeDeco(${d.id})" class="text-red-400 font-bold ml-2">✕</button>
         </div>
-      `;
+      `).join('');
+    }
 
-      techniquePrice = 0;
+    // =====================
+    // CALCULATOR: RETIRO
+    // =====================
+    function addRetiro(i) {
+      if (i === 0) return; // sin retiro
+      
+      calcState.retiros.push({
+        ...RETIROS[i],
+        id: Date.now() + Math.random()
+      });
+      renderSelectedRetiro();
+      updateTotal();
+    }
 
-    } else {
+    function removeRetiro(id) {
+      calcState.retiros = calcState.retiros.filter(r => r.id !== id);
+      renderSelectedRetiro();
+      updateTotal();
+    }
 
-      subDiv.classList.add('hidden');
+    function renderSelectedRetiro() {
+      const c = document.getElementById('retiro-selected');
+      c.innerHTML = calcState.retiros.map(r => `
+        <div class="flex justify-between items-center bg-purple-50 rounded-lg px-3 py-1 text-xs">
+          <span>${r.name} - ${fmt(r.price)}</span>
+          <button onclick="removeRetiro(${r.id})" class="text-red-400 font-bold ml-2">✕</button>
+        </div>
+      `).join('');
+    }
 
-      if (tech === 'rubber') {
-        techniquePrice = 50000;
+    // =====================
+    // CALCULATOR: TOTAL
+    // =====================
+    function getTotal() {
+      let t = 0;
+      t += calcState.domicilio ? (parseInt(document.getElementById('dom-price').value) || 0) : 0;
+      t += calcState.tecnicas.reduce((s, x) => s + x.price, 0);
+      t += calcState.decoraciones.reduce((s, x) => s + x.price * x.nails, 0);
+      t += calcState.tonos * 500;
+      t += calcState.forma ? 6000 : 0;
+      t += calcState.retiros.reduce((s, x) => s + x.price, 0);
+      return t;
+    }
+
+    function updateTotal() {
+      calcState.domPrice = parseInt(document.getElementById('dom-price').value) || 0;
+      document.getElementById('running-total').textContent = fmt(getTotal());
+    }
+
+    function resetCalc() {
+      calcState = {
+        domicilio: false,
+        domPrice: 0,
+        tecnicas: [],
+        decoraciones: [],
+        tonos: 0,
+        forma: false,
+        retiros: []
+      };
+      
+      setDomicilio(false);
+      setForma(false);
+      document.getElementById('tonos-count').textContent = '0';
+      renderSelectedTecnicas();
+      renderSelectedDeco();
+      renderSelectedRetiro();
+      updateTotal();
+    }
+
+    function getServicesSummary() {
+      let parts = [];
+      
+      if (calcState.tecnicas.length) {
+        parts.push('Técnicas: ' + calcState.tecnicas.map(t => t.name).join(', '));
       }
-
-      if (tech === 'builder') {
-        techniquePrice = 60000;
+      if (calcState.decoraciones.length) {
+        parts.push('Deco: ' + calcState.decoraciones.map(d => d.name + 'x' + d.nails).join(', '));
       }
+      if (calcState.tonos) {
+        parts.push('Tonos extras: ' + calcState.tonos);
+      }
+      if (calcState.forma) {
+        parts.push('Cambio forma');
+      }
+      if (calcState.retiros.length) {
+        parts.push('Retiro: ' + calcState.retiros.map(r => r.name).join(', '));
+      }
+      if (calcState.domicilio) {
+        parts.push('Domicilio: ' + fmt(calcState.domPrice));
+      }
+      
+      return parts.join(' | ');
+    }
 
-      if (tech === 'pedicure') {
-        techniquePrice = 20000;
+    function passToAgenda() {
+      document.getElementById('agenda-cost').value = fmt(getTotal());
+      showPage('agenda');
+    }
+
+    // =====================
+    // CALENDAR
+    // =====================
+    function renderCalendar() {
+      const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                      'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+      
+      document.getElementById('month-label').textContent = months[currentMonth] + ' ' + currentYear;
+      
+      const grid = document.getElementById('calendar-grid');
+      grid.innerHTML = '';
+      
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      
+      for (let i = 0; i < firstDay; i++) {
+        grid.innerHTML += '<div></div>';
+      }
+      
+      for (let d = 1; d <= daysInMonth; d++) {
+        const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+        const sel = selectedDate === dateStr;
+        grid.innerHTML += `
+          <button onclick="selectDate('${dateStr}')" class="h-8 rounded-lg text-xs font-semibold transition-all ${sel ? 'bg-purple-400 text-white' : 'hover:bg-purple-100 text-purple-700'}">
+            ${d}
+          </button>
+        `;
       }
     }
 
-    calculateTotal();
-  }
-
-  function selectSub(e, option, price) {
-
-    selectedSubOption = option;
-    techniquePrice = price;
-
-    document.querySelectorAll('.sub-btn').forEach(btn => {
-      btn.classList.remove('btn-active');
-    });
-
-    e.currentTarget.classList.add('btn-active');
-
-    calculateTotal();
-  }
-
-  function selectRetiro(e, type) {
-
-    selectedRetiro = type;
-    retiroPrice = retiroPrices[type];
-
-    document.querySelectorAll('.retiro-btn').forEach(btn => {
-      btn.classList.remove('btn-active');
-    });
-
-    e.currentTarget.classList.add('btn-active');
-
-    calculateTotal();
-  }
-
-  // =========================
-  // TOTAL
-  // =========================
-
-  function calculateTotal() {
-
-    let total = techniquePrice + retiroPrice;
-
-    for (const [id, count] of Object.entries(decorations)) {
-
-      const deco = decorationsList.find(x => x.id === id);
-
-      if (deco) {
-        total += deco.price * count;
-      }
-    }
-
-    total += extraTones * 1000;
-
-    if (shapeChange) {
-      total += 6000;
-    }
-
-    document.getElementById('total-price').textContent =
-      '$' + total.toLocaleString();
-
-    return total;
-  }
-
-  function goToAgendaWithPrice() {
-
-    const total = calculateTotal();
-
-    showPage('agenda');
-
-    document.getElementById('appt-price').value =
-      '$' + total.toLocaleString();
-  }
-
-  // =========================
-  // PAGES
-  // =========================
-
-  function showPage(page) {
-
-    currentPage = page;
-
-    document.getElementById('page-calculator').classList.add('hidden');
-    document.getElementById('page-agenda').classList.add('hidden');
-    document.getElementById('page-citas').classList.add('hidden');
-
-    document.getElementById(`page-${page}`).classList.remove('hidden');
-
-    document.querySelectorAll('nav button').forEach(btn => {
-      btn.classList.remove('active');
-    });
-
-    if (page === 'calculator') {
-      document.getElementById('nav-calc').classList.add('active');
-    }
-
-    if (page === 'agenda') {
-      document.getElementById('nav-agenda').classList.add('active');
+    function selectDate(d) {
+      selectedDate = d;
       renderCalendar();
     }
 
-    if (page === 'citas') {
-      document.getElementById('nav-citas').classList.add('active');
-      showCitasTab('agendadas');
+    function changeMonth(d) {
+      currentMonth += d;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      renderCalendar();
     }
 
-    lucide.createIcons();
-  }
-
-  // =========================
-  // CALENDAR
-  // =========================
-
-  function renderCalendar() {
-
-    const grid = document.getElementById('calendar-grid');
-
-    const date = new Date(currentYear, currentMonth, 1);
-
-    const monthNames = [
-      'Enero','Febrero','Marzo','Abril',
-      'Mayo','Junio','Julio','Agosto',
-      'Septiembre','Octubre','Noviembre','Diciembre'
-    ];
-
-    document.getElementById('month-label').textContent =
-      monthNames[currentMonth] + ' ' + currentYear;
-
-    const firstDay = date.getDay();
-
-    const daysInMonth =
-      new Date(currentYear, currentMonth + 1, 0).getDate();
-
-    let html = '';
-
-    for (let i = 0; i < firstDay; i++) {
-      html += '<div></div>';
-    }
-
-    for (let d = 1; d <= daysInMonth; d++) {
-
-      const dateStr =
-        `${currentYear}-${String(currentMonth + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-
-      const isSelected = selectedDate === dateStr;
-
-      html += `
-        <button
-          onclick="selectDate('${dateStr}')"
-          class="p-1 text-sm rounded-lg transition-all ${isSelected ? 'btn-active' : 'hover:bg-lilac-100 text-gray-700'}"
-        >
-          ${d}
+    // =====================
+    // TIME SELECTION
+    // =====================
+    function renderTimes() {
+      const grid = document.getElementById('time-grid');
+      grid.innerHTML = TIMES.map(t => `
+        <button onclick="selectTime('${t}')" class="py-2 rounded-xl text-xs font-semibold transition-all border ${selectedTime === t ? 'bg-purple-400 text-white border-purple-400' : 'border-lila-200 text-purple-700 hover:bg-purple-50'}">
+          ${t}
         </button>
+      `).join('');
+    }
+
+    function selectTime(t) {
+      selectedTime = t;
+      renderTimes();
+    }
+
+    // =====================
+    // STORAGE: LOCALSTORAGE
+    // =====================
+    function loadAppointments() {
+      try {
+        const saved = localStorage.getItem('aura_bella_appointments');
+        allAppointments = saved ? JSON.parse(saved) : [];
+      } catch (e) {
+        allAppointments = [];
+      }
+    }
+
+    function saveAppointments() {
+      localStorage.setItem('aura_bella_appointments', JSON.stringify(allAppointments));
+    }
+
+    // =====================
+    // CONFIRM APPOINTMENT
+    // =====================
+    function confirmAppointment() {
+      const name = document.getElementById('client-name').value.trim();
+      const phone = document.getElementById('client-phone').value.trim();
+      const address = document.getElementById('client-address').value.trim();
+      const advance = parseInt(document.getElementById('advance-pay').value) || 0;
+      const msg = document.getElementById('agenda-msg');
+
+      if (!name || !selectedDate || !selectedTime) {
+        msg.textContent = '⚠️ Completa nombre, fecha y hora.';
+        msg.classList.remove('hidden');
+        return;
+      }
+
+      if (allAppointments.length >= 999) {
+        msg.textContent = '⚠️ Límite de citas alcanzado.';
+        msg.classList.remove('hidden');
+        return;
+      }
+
+      const btn = document.getElementById('confirm-btn');
+      btn.disabled = true;
+      btn.textContent = 'Guardando...';
+
+      // Simular pequeño delay para feedback visual
+      setTimeout(() => {
+        const appointment = {
+          __backendId: 'apt_' + Date.now() + Math.random().toString(36).substr(2, 9),
+          client_name: name,
+          client_phone: phone,
+          client_address: address,
+          date: selectedDate,
+          time: selectedTime,
+          total_price: getTotal(),
+          advance_payment: advance,
+          services_summary: getServicesSummary(),
+          status: 'agendada',
+          created_at: new Date().toISOString()
+        };
+
+        allAppointments.push(appointment);
+        saveAppointments();
+
+        btn.disabled = false;
+        btn.textContent = '✅ Confirmar Cita';
+
+        msg.textContent = '✅ ¡Cita agendada con éxito!';
+        msg.classList.remove('hidden');
+        
+        document.getElementById('client-name').value = '';
+        document.getElementById('client-phone').value = '';
+        document.getElementById('client-address').value = '';
+        document.getElementById('advance-pay').value = '';
+        
+        selectedDate = null;
+        selectedTime = null;
+        renderCalendar();
+        renderTimes();
+        resetCalc();
+        
+        setTimeout(() => msg.classList.add('hidden'), 3000);
+      }, 500);
+    }
+
+    // =====================
+    // CITAS PAGE: TAB SELECTION
+    // =====================
+    function showCitasTab(t) {
+      currentCitasTab = t;
+      
+      ['agendadas', 'realizadas', 'ganancias'].forEach(x => {
+        const el = document.getElementById('ct-' + x);
+        el.classList.toggle('bg-purple-400', x === t);
+        el.classList.toggle('text-white', x === t);
+        el.classList.toggle('bg-white/60', x !== t);
+        el.classList.toggle('text-purple-700', x !== t);
+      });
+      
+      renderCitas();
+    }
+
+    // =====================
+    // CITAS PAGE: RENDERING
+    // =====================
+    function renderCitas() {
+      const c = document.getElementById('citas-content');
+
+      if (currentCitasTab === 'agendadas') {
+        const citas = allAppointments.filter(a => a.status === 'agendada').sort((a, b) => a.created_at > b.created_at ? 1 : -1);
+        
+        if (!citas.length) {
+          c.innerHTML = '<p class="text-center text-purple-400 text-sm py-8">No hay citas agendadas</p>';
+          return;
+        }
+        
+        c.innerHTML = citas.map(a => `
+          <div class="glass rounded-2xl p-4 mb-3 border border-lila-200 fade-in">
+            <div class="flex justify-between items-start mb-2">
+              <span class="font-bold text-purple-800">${a.client_name}</span>
+              <span class="text-xs bg-purple-100 text-purple-600 px-2 py-1 rounded-full">${a.date} ${a.time}</span>
+            </div>
+            <p class="text-xs text-purple-600 mb-1">📞 ${a.client_phone || '-'}</p>
+            <p class="text-xs text-purple-600 mb-1">📍 ${a.client_address || '-'}</p>
+            <p class="text-xs text-purple-500 mb-2">${a.services_summary || 'Sin detalle'}</p>
+            <div class="flex justify-between items-center">
+              <span class="font-bold text-purple-800">${fmt(a.total_price)}</span>
+              <span class="text-xs text-purple-500">Anticipo: ${fmt(a.advance_payment || 0)}</span>
+            </div>
+            <div class="flex gap-2 mt-2">
+              <button onclick="markDone('${a.__backendId}')" class="flex-1 py-2 rounded-xl bg-green-100 text-green-700 text-xs font-bold hover:bg-green-200 transition-all">✓ Realizada</button>
+              <button onclick="deleteCita('${a.__backendId}')" class="flex-1 py-2 rounded-xl bg-red-100 text-red-600 text-xs font-bold hover:bg-red-200 transition-all">🗑️ Eliminar</button>
+            </div>
+          </div>
+        `).join('');
+
+      } else if (currentCitasTab === 'realizadas') {
+        const citas = allAppointments.filter(a => a.status === 'realizada');
+        
+        if (!citas.length) {
+          c.innerHTML = '<p class="text-center text-purple-400 text-sm py-8">No hay citas realizadas</p>';
+          return;
+        }
+        
+        c.innerHTML = citas.map(a => `
+          <div class="glass rounded-2xl p-3 mb-2 border border-lila-200 flex justify-between items-center">
+            <div>
+              <p class="font-bold text-purple-800 text-sm">${a.client_name}</p>
+              <p class="text-xs text-purple-400">${a.date}</p>
+            </div>
+            <span class="font-bold text-purple-800">${fmt(a.total_price)}</span>
+          </div>
+        `).join('');
+
+      } else {
+        const realizadas = allAppointments.filter(a => a.status === 'realizada');
+        const now = new Date();
+        const weekAgo = new Date(now - 7 * 24 * 60 * 60 * 1000);
+        const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+        const yearStart = new Date(now.getFullYear(), 0, 1);
+
+        const weekly = realizadas.filter(a => new Date(a.created_at) >= weekAgo);
+        const monthly = realizadas.filter(a => new Date(a.created_at) >= monthStart);
+        const yearly = realizadas.filter(a => new Date(a.created_at) >= yearStart);
+
+        const sumW = weekly.reduce((s, a) => s + a.total_price, 0);
+        const sumM = monthly.reduce((s, a) => s + a.total_price, 0);
+        const sumY = yearly.reduce((s, a) => s + a.total_price, 0);
+
+        c.innerHTML = `
+          <div class="glass rounded-2xl p-4 mb-3 border border-lila-200 text-center">
+            <p class="text-xs text-purple-500">📅 Semanal</p>
+            <p class="font-display text-2xl font-bold text-purple-800">${fmt(sumW)}</p>
+            <p class="text-xs text-purple-400">${weekly.length} citas</p>
+          </div>
+          <div class="glass rounded-2xl p-4 mb-3 border border-lila-200 text-center">
+            <p class="text-xs text-purple-500">📅 Mensual</p>
+            <p class="font-display text-2xl font-bold text-purple-800">${fmt(sumM)}</p>
+            <p class="text-xs text-purple-400">${monthly.length} citas</p>
+          </div>
+          <div class="glass rounded-2xl p-4 mb-3 border border-lila-200 text-center">
+            <p class="text-xs text-purple-500">📅 Anual</p>
+            <p class="font-display text-2xl font-bold text-purple-800">${fmt(sumY)}</p>
+            <p class="text-xs text-purple-400">${yearly.length} citas</p>
+          </div>
+        `;
+      }
+    }
+
+    // =====================
+    // CITAS PAGE: ACTIONS
+    // =====================
+    function markDone(id) {
+      const index = allAppointments.findIndex(a => a.__backendId === id);
+      if (index === -1) return;
+
+      allAppointments[index].status = 'realizada';
+      saveAppointments();
+      renderCitas();
+    }
+
+    function deleteCita(id) {
+      const apt = allAppointments.find(a => a.__backendId === id);
+      if (!apt) return;
+
+      // Confirmation dialog
+      let existing = document.getElementById('delete-dialog');
+      if (existing) existing.remove();
+
+      const div = document.createElement('div');
+      div.id = 'delete-dialog';
+      div.className = 'fixed inset-0 z-[999] flex items-center justify-center bg-black/30';
+      div.innerHTML = `
+        <div class="bg-white rounded-2xl p-5 w-72 text-center shadow-xl">
+          <p class="font-bold text-purple-800 mb-1">¿Eliminar esta cita?</p>
+          <p class="text-xs text-purple-500 mb-4">${apt.client_name} - ${apt.date} ${apt.time}</p>
+          <div class="flex gap-2">
+            <button onclick="deleteConfirmCancel()" class="flex-1 py-2 rounded-xl border border-lila-200 text-sm text-purple-600 font-bold">Cancelar</button>
+            <button onclick="deleteConfirmYes('${id}')" class="flex-1 py-2 rounded-xl bg-red-500 text-white text-sm font-bold hover:bg-red-600">Eliminar</button>
+          </div>
+        </div>
       `;
+      document.body.appendChild(div);
     }
 
-    grid.innerHTML = html;
-  }
-
-  function changeMonth(delta) {
-
-    currentMonth += delta;
-
-    if (currentMonth > 11) {
-      currentMonth = 0;
-      currentYear++;
+    function deleteConfirmCancel() {
+      document.getElementById('delete-dialog').remove();
     }
 
-    if (currentMonth < 0) {
-      currentMonth = 11;
-      currentYear--;
+    function deleteConfirmYes(id) {
+      document.getElementById('delete-dialog').remove();
+      const index = allAppointments.findIndex(a => a.__backendId === id);
+      if (index === -1) return;
+
+      allAppointments.splice(index, 1);
+      saveAppointments();
+      renderCitas();
     }
 
-    renderCalendar();
-  }
+    // =====================
+    // INITIALIZATION
+    // =====================
+    function initGrids() {
+      document.getElementById('tecnicas-grid').innerHTML = TECNICAS.map((t, i) => `
+        <button onclick="addTecnica(${i})" class="btn-service py-2 px-3 rounded-xl border border-lila-200 text-left text-xs font-semibold text-purple-700 bg-white hover:bg-purple-50 flex justify-between">
+          <span>${t.name}</span>
+          <span class="text-purple-400">${fmt(t.price)}</span>
+        </button>
+      `).join('');
 
-  function selectDate(date) {
+      document.getElementById('deco-grid').innerHTML = DECORACIONES.map((d, i) => `
+        <button onclick="showDecoDialog(${i})" class="btn-service py-2 px-2 rounded-xl border border-lila-200 text-xs text-purple-700 bg-white hover:bg-purple-50 text-center">
+          <div class="font-semibold">${d.name}</div>
+          <div class="text-purple-400">${fmt(d.price)}/uña</div>
+        </button>
+      `).join('');
 
-    selectedDate = date;
+      document.getElementById('retiro-grid').innerHTML = RETIROS.map((r, i) => `
+        <button onclick="addRetiro(${i})" class="btn-service py-2 px-3 rounded-xl border border-lila-200 text-left text-xs font-semibold text-purple-700 bg-white hover:bg-purple-50 flex justify-between">
+          <span>${r.name}</span>
+          <span class="text-purple-400">${r.price ? fmt(r.price) : '-'}</span>
+        </button>
+      `).join('');
 
-    renderCalendar();
-  }
-
-  function selectTime(e, time) {
-
-    selectedTime = time;
-
-    document.querySelectorAll('.time-btn').forEach(btn => {
-      btn.classList.remove('btn-active');
-    });
-
-    e.currentTarget.classList.add('btn-active');
-  }
-
-  // =========================
-  // APPOINTMENTS
-  // =========================
-
-  function saveAppointments() {
-
-    localStorage.setItem(
-      'appointments',
-      JSON.stringify(allAppointments)
-    );
-  }
-
-  function confirmAppointment() {
-
-    const name =
-      document.getElementById('client-name').value.trim();
-
-    const phone =
-      document.getElementById('client-phone').value.trim();
-
-    const price =
-      document.getElementById('appt-price').value;
-
-    const advance =
-      parseInt(document.getElementById('appt-advance').value) || 0;
-
-    if (!name || !selectedDate || !selectedTime) {
-
-      const msg = document.getElementById('confirm-msg');
-
-      msg.textContent =
-        '⚠️ Completa nombre, fecha y hora';
-
-      msg.classList.remove('hidden');
-
-      return;
+      renderCalendar();
+      renderTimes();
     }
 
-    const appointment = {
-
-      id: Date.now(),
-
-      client_name: name,
-
-      client_phone: phone,
-
-      date: selectedDate,
-
-      time: selectedTime,
-
-      technique:
-        selectedTechnique +
-        (selectedSubOption ? ' - ' + selectedSubOption : ''),
-
-      details: price,
-
-      total_price: calculateTotal(),
-
-      advance_payment: advance,
-
-      status: 'agendada'
+    // =====================
+    // SDK INITIALIZATION
+    // =====================
+    const dataHandler = {
+      onDataChanged(data) {
+        allAppointments = data;
+        if (document.getElementById('page-citas') && !document.getElementById('page-citas').classList.contains('hidden')) {
+          renderCitas();
+        }
+      }
     };
 
-    allAppointments.push(appointment);
-
-    saveAppointments();
-
-    document.getElementById('confirm-msg').textContent =
-      '✅ ¡Cita agendada con éxito!';
-
-    document.getElementById('confirm-msg').classList.remove('hidden');
-
-    document.getElementById('client-name').value = '';
-    document.getElementById('client-phone').value = '';
-    document.getElementById('appt-advance').value = '';
-
-    selectedDate = null;
-    selectedTime = null;
-  }
-
-  // =========================
-  // CITAS
-  // =========================
-
-  function showCitasTab(tab) {
-
-    document.getElementById('tab-agendadas').classList.remove('active');
-    document.getElementById('tab-realizadas').classList.remove('active');
-    document.getElementById('tab-ganancias').classList.remove('active');
-
-    document.getElementById(`tab-${tab}`).classList.add('active');
-
-    renderCitasContent(tab);
-  }
-
-  function renderCitasContent(tab) {
-
-    const container =
-      document.getElementById('citas-content');
-
-    if (tab === 'agendadas') {
-
-      const agendadas =
-        allAppointments.filter(a => a.status === 'agendada');
-
-      if (!agendadas.length) {
-
-        container.innerHTML = `
-          <div class="glass rounded-2xl p-6 text-center text-lilac-400">
-            No hay citas agendadas
-          </div>
-        `;
-
-        return;
-      }
-
-      container.innerHTML = agendadas.map(a => `
-        <div class="glass rounded-2xl p-4 shadow border border-lilac-100">
-
-          <div class="flex justify-between items-start">
-
-            <div>
-
-              <p class="font-bold text-lilac-600">
-                ${a.client_name}
-              </p>
-
-              <p class="text-xs text-lilac-400">
-                ${a.date} • ${a.time}
-              </p>
-
-              <p class="text-xs text-gray-500 mt-1">
-                ${a.technique}
-              </p>
-
-              <p class="text-sm font-semibold text-lilac-500 mt-1">
-                ${a.details}
-              </p>
-
-            </div>
-
-            <button
-              onclick="markDone(${a.id})"
-              class="px-3 py-1 rounded-full bg-green-100 text-green-600 text-xs font-bold"
-            >
-              ✓ Hecha
-            </button>
-
-          </div>
-        </div>
-      `).join('');
-
-    } else if (tab === 'realizadas') {
-
-      const realizadas =
-        allAppointments.filter(a => a.status === 'realizada');
-
-      if (!realizadas.length) {
-
-        container.innerHTML = `
-          <div class="glass rounded-2xl p-6 text-center text-lilac-400">
-            No hay citas realizadas
-          </div>
-        `;
-
-        return;
-      }
-
-      container.innerHTML = realizadas.map(a => `
-        <div class="glass rounded-2xl p-4 shadow border border-lilac-100 opacity-80">
-
-          <p class="font-bold text-lilac-600">
-            ${a.client_name}
-          </p>
-
-          <p class="text-xs text-lilac-400">
-            ${a.date} • ${a.time}
-          </p>
-
-          <p class="text-sm font-semibold text-green-500 mt-1">
-            ${a.details}
-          </p>
-
-        </div>
-      `).join('');
-
-    } else {
-
-      const realizadas =
-        allAppointments.filter(a => a.status === 'realizada');
-
-      let total = 0;
-
-      realizadas.forEach(a => {
-        total += a.total_price;
-      });
-
-      container.innerHTML = `
-        <div class="glass rounded-2xl p-5 shadow border border-lilac-100">
-
-          <h3 class="font-display text-lg font-bold text-lilac-600 text-center mb-4">
-            💰 Ganancias
-          </h3>
-
-          <div class="bg-gradient-to-r from-lilac-200 to-lilac-100 p-4 rounded-xl text-center">
-
-            <p class="text-xs text-lilac-400">
-              Total generado
-            </p>
-
-            <p class="font-bold text-2xl text-lilac-600">
-              $${total.toLocaleString()}
-            </p>
-
-          </div>
-
-          <p class="text-center text-xs text-lilac-400 mt-3">
-            ${realizadas.length} citas realizadas
-          </p>
-
-        </div>
-      `;
-    }
-  }
-
-  function markDone(id) {
-
-    const appointment =
-      allAppointments.find(a => a.id === id);
-
-    if (!appointment) return;
-
-    appointment.status = 'realizada';
-
-    saveAppointments();
-
-    showCitasTab('agendadas');
-  }
-
-  // =========================
-  // INIT
-  // =========================
-
-  renderDecorations();
-  renderCalendar();
-  lucide.createIcons();
-
-</script>
-
-</body>
+    initGrids();
+    loadAppointments();
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f869ba571c8f7b4',t:'MTc3ODIyMzg0Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
