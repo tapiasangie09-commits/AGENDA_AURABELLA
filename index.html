@@ -81,22 +81,27 @@
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
  </head>
  <body class="h-full">
-  <div id="app" class="h-full w-full overflow-auto sparkle"><!-- Navigation Tabs -->
+  <div id="app" class="h-full w-full overflow-auto sparkle">
+   <!-- Navigation Tabs -->
    <header class="sticky top-0 z-50 glass border-b border-lila-200 px-4 py-3">
     <h1 id="salon-title" class="font-display text-2xl font-bold text-center text-purple-800 mb-2">✨ Aura Bella ✨</h1>
-    <nav class="flex gap-1 overflow-x-auto"><button onclick="showPage('calc')" id="tab-calc" class="tab-active px-3 py-2 rounded-full text-xs whitespace-nowrap transition-all"> 💅 Nail Art </button> <button onclick="showPage('lash')" id="tab-lash" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> ✨ Lash &amp; Brow Art </button> <button onclick="showPage('agenda')" id="tab-agenda" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> 📅 Agenda </button> <button onclick="showPage('citas')" id="tab-citas" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> 📋 Citas </button>
+    <nav class="flex gap-1 overflow-x-auto">
+     <button onclick="showPage('calc')" id="tab-calc" class="tab-active px-3 py-2 rounded-full text-xs whitespace-nowrap transition-all"> 💅 Nail Art </button> <button onclick="showPage('lash')" id="tab-lash" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> ✨ Lash &amp; Brow Art </button> <button onclick="showPage('agenda')" id="tab-agenda" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> 📅 Agenda </button> <button onclick="showPage('citas')" id="tab-citas" class="px-3 py-2 rounded-full text-xs whitespace-nowrap bg-white/60 text-purple-700 transition-all"> 📋 Citas </button>
     </nav>
    </header><!-- PAGE: Calculator -->
-   <div id="page-calc" class="fade-in p-4 max-w-lg mx-auto pb-32"><!-- Running Total -->
+   <div id="page-calc" class="fade-in p-4 max-w-lg mx-auto pb-32">
+    <!-- Running Total -->
     <div class="glass rounded-2xl p-4 mb-4 border border-lila-200 text-center sticky top-[105px] z-40">
      <p class="text-sm text-purple-600">Total Servicio</p>
      <p id="running-total" class="font-display text-3xl font-bold text-purple-800">$0</p><button onclick="resetCalc()" class="mt-2 text-xs text-purple-400 underline"> Limpiar todo </button>
     </div><!-- Domicilio -->
     <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
      <h3 class="font-display font-bold text-purple-800 mb-2">🏠 Domicilio</h3>
-     <div class="flex gap-2 mb-2"><button onclick="setDomicilio(true)" id="dom-yes" class="btn-service flex-1 py-2 rounded-xl border-2 border-lila-200 text-sm font-semibold text-purple-700 bg-white"> Sí </button> <button onclick="setDomicilio(false)" id="dom-no" class="btn-service flex-1 py-2 rounded-xl border-2 border-purple-400 text-sm font-semibold text-white bg-purple-400"> No </button>
+     <div class="flex gap-2 mb-2">
+      <button onclick="setDomicilio(true)" id="dom-yes" class="btn-service flex-1 py-2 rounded-xl border-2 border-lila-200 text-sm font-semibold text-purple-700 bg-white"> Sí </button> <button onclick="setDomicilio(false)" id="dom-no" class="btn-service flex-1 py-2 rounded-xl border-2 border-purple-400 text-sm font-semibold text-white bg-purple-400"> No </button>
      </div>
-     <div id="dom-price-wrap" class="hidden"><label class="text-xs text-purple-600">Precio domicilio (COP):</label> <input type="number" id="dom-price" oninput="updateTotal()" placeholder="$0" class="w-full mt-1 p-2 rounded-xl border border-lila-200 text-sm focus:outline-none focus:border-purple-400">
+     <div id="dom-price-wrap" class="hidden">
+      <label class="text-xs text-purple-600">Precio domicilio (COP):</label> <input type="number" id="dom-price" oninput="updateTotal()" placeholder="$0" class="w-full mt-1 p-2 rounded-xl border border-lila-200 text-sm focus:outline-none focus:border-purple-400">
      </div>
     </section><!-- Técnicas -->
     <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
@@ -113,12 +118,14 @@
     </section><!-- Tonos Extras -->
     <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
      <h3 class="font-display font-bold text-purple-800 mb-2">🎨 Tonos Extras ($500 c/u)</h3>
-     <div class="flex items-center gap-3"><button onclick="changeTonos(-1)" class="w-9 h-9 rounded-full bg-purple-200 text-purple-800 font-bold text-lg"> − </button> <span id="tonos-count" class="text-xl font-bold text-purple-800">0</span> <button onclick="changeTonos(1)" class="w-9 h-9 rounded-full bg-purple-400 text-white font-bold text-lg"> + </button>
+     <div class="flex items-center gap-3">
+      <button onclick="changeTonos(-1)" class="w-9 h-9 rounded-full bg-purple-200 text-purple-800 font-bold text-lg"> − </button> <span id="tonos-count" class="text-xl font-bold text-purple-800">0</span> <button onclick="changeTonos(1)" class="w-9 h-9 rounded-full bg-purple-400 text-white font-bold text-lg"> + </button>
      </div>
     </section><!-- Cambio de Forma -->
     <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
      <h3 class="font-display font-bold text-purple-800 mb-2">✂️ Cambio de Forma ($6.000)</h3>
-     <div class="flex gap-2"><button onclick="setForma(true)" id="forma-yes" class="btn-service flex-1 py-2 rounded-xl border-2 border-lila-200 text-sm font-semibold text-purple-700 bg-white"> Sí </button> <button onclick="setForma(false)" id="forma-no" class="btn-service flex-1 py-2 rounded-xl border-2 border-purple-400 text-sm font-semibold text-white bg-purple-400"> No </button>
+     <div class="flex gap-2">
+      <button onclick="setForma(true)" id="forma-yes" class="btn-service flex-1 py-2 rounded-xl border-2 border-lila-200 text-sm font-semibold text-purple-700 bg-white"> Sí </button> <button onclick="setForma(false)" id="forma-no" class="btn-service flex-1 py-2 rounded-xl border-2 border-purple-400 text-sm font-semibold text-white bg-purple-400"> No </button>
      </div>
     </section><!-- Retiro -->
     <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
@@ -127,19 +134,23 @@
      <div class="grid grid-cols-1 gap-2" id="retiro-grid"></div>
      <div id="retiro-selected" class="mt-3 space-y-1"></div>
     </section><!-- Pasar a Agenda -->
-    <div class="flex gap-2"><button onclick="passToAgenda()" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-400 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"> 📅 Agendar Cita </button> <button onclick="showPage('lash')" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-500 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"> ✨ Lash &amp; Brow </button>
+    <div class="flex gap-2">
+     <button onclick="passToAgenda()" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-400 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"> 📅 Agendar Cita </button> <button onclick="showPage('lash')" class="flex-1 py-3 rounded-2xl bg-gradient-to-r from-pink-400 to-purple-500 text-white font-bold text-lg shadow-lg hover:shadow-xl transition-all"> ✨ Lash &amp; Brow </button>
     </div>
    </div><!-- PAGE: Lash & Brow Art -->
-   <div id="page-lash" class="fade-in p-4 max-w-lg mx-auto pb-32 hidden"><!-- Running Total -->
+   <div id="page-lash" class="fade-in p-4 max-w-lg mx-auto pb-32 hidden">
+    <!-- Running Total -->
     <div class="glass rounded-2xl p-4 mb-4 border border-lila-200 text-center sticky top-[105px] z-40">
      <p class="text-sm text-purple-600">Total Servicio</p>
      <p id="lash-running-total" class="font-display text-3xl font-bold text-purple-800">$0</p><button onclick="resetLash()" class="mt-2 text-xs text-purple-400 underline"> Limpiar todo </button>
     </div><!-- Domicilio -->
     <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
      <h3 class="font-display font-bold text-purple-800 mb-2">🏠 Domicilio</h3>
-     <div class="flex gap-2 mb-2"><button onclick="setLashDomicilio(true)" id="lash-dom-yes" class="btn-service flex-1 py-2 rounded-xl border-2 border-lila-200 text-sm font-semibold text-purple-700 bg-white"> Sí </button> <button onclick="setLashDomicilio(false)" id="lash-dom-no" class="btn-service flex-1 py-2 rounded-xl border-2 border-purple-400 text-sm font-semibold text-white bg-purple-400"> No </button>
+     <div class="flex gap-2 mb-2">
+      <button onclick="setLashDomicilio(true)" id="lash-dom-yes" class="btn-service flex-1 py-2 rounded-xl border-2 border-lila-200 text-sm font-semibold text-purple-700 bg-white"> Sí </button> <button onclick="setLashDomicilio(false)" id="lash-dom-no" class="btn-service flex-1 py-2 rounded-xl border-2 border-purple-400 text-sm font-semibold text-white bg-purple-400"> No </button>
      </div>
-     <div id="lash-dom-price-wrap" class="hidden"><label class="text-xs text-purple-600">Precio domicilio (COP):</label> <input type="number" id="lash-dom-price" oninput="updateLashTotal()" placeholder="$0" class="w-full mt-1 p-2 rounded-xl border border-lila-200 text-sm focus:outline-none focus:border-purple-400">
+     <div id="lash-dom-price-wrap" class="hidden">
+      <label class="text-xs text-purple-600">Precio domicilio (COP):</label> <input type="number" id="lash-dom-price" oninput="updateLashTotal()" placeholder="$0" class="w-full mt-1 p-2 rounded-xl border border-lila-200 text-sm focus:outline-none focus:border-purple-400">
      </div>
     </section><!-- Técnicas -->
     <section class="glass rounded-2xl p-4 mb-4 border border-lila-200">
@@ -163,9 +174,11 @@
    <div id="page-agenda" class="fade-in p-4 max-w-lg mx-auto pb-32 hidden">
     <div class="glass rounded-2xl p-4 mb-4 border border-lila-200">
      <h3 class="font-display font-bold text-purple-800 mb-3">📅 Calendario 2026</h3>
-     <div class="flex items-center justify-between mb-3"><button onclick="changeMonth(-1)" class="w-8 h-8 rounded-full bg-purple-200 text-purple-800 font-bold"> ‹ </button> <span id="month-label" class="font-bold text-purple-800"></span> <button onclick="changeMonth(1)" class="w-8 h-8 rounded-full bg-purple-200 text-purple-800 font-bold"> › </button>
+     <div class="flex items-center justify-between mb-3">
+      <button onclick="changeMonth(-1)" class="w-8 h-8 rounded-full bg-purple-200 text-purple-800 font-bold"> ‹ </button> <span id="month-label" class="font-bold text-purple-800"></span> <button onclick="changeMonth(1)" class="w-8 h-8 rounded-full bg-purple-200 text-purple-800 font-bold"> › </button>
      </div>
-     <div class="grid grid-cols-7 gap-1 text-center text-xs text-purple-600 mb-1"><span>Do</span> <span>Lu</span> <span>Ma</span> <span>Mi</span> <span>Ju</span> <span>Vi</span> <span>Sa</span>
+     <div class="grid grid-cols-7 gap-1 text-center text-xs text-purple-600 mb-1">
+      <span>Do</span> <span>Lu</span> <span>Ma</span> <span>Mi</span> <span>Ju</span> <span>Vi</span> <span>Sa</span>
      </div>
      <div id="calendar-grid" class="grid grid-cols-7 gap-1"></div>
     </div><!-- Time Selection -->
@@ -179,7 +192,8 @@
     <div id="agenda-msg" class="mt-3 text-center text-sm text-purple-600 hidden"></div>
    </div><!-- PAGE: Citas --> <!-- PAGE: Citas -->
    <div id="page-citas" class="fade-in p-4 max-w-lg mx-auto pb-32 hidden">
-    <div class="flex gap-2 mb-4"><button onclick="showCitasTab('agendadas')" id="ct-agendadas" class="flex-1 py-2 rounded-xl text-xs font-bold bg-purple-400 text-white"> Agendadas </button> <button onclick="showCitasTab('realizadas')" id="ct-realizadas" class="flex-1 py-2 rounded-xl text-xs font-bold bg-white/60 text-purple-700 border border-lila-200"> Realizadas </button> <button onclick="showCitasTab('ganancias')" id="ct-ganancias" class="flex-1 py-2 rounded-xl text-xs font-bold bg-white/60 text-purple-700 border border-lila-200"> Ganancias </button>
+    <div class="flex gap-2 mb-4">
+     <button onclick="showCitasTab('agendadas')" id="ct-agendadas" class="flex-1 py-2 rounded-xl text-xs font-bold bg-purple-400 text-white"> Agendadas </button> <button onclick="showCitasTab('realizadas')" id="ct-realizadas" class="flex-1 py-2 rounded-xl text-xs font-bold bg-white/60 text-purple-700 border border-lila-200"> Realizadas </button> <button onclick="showCitasTab('ganancias')" id="ct-ganancias" class="flex-1 py-2 rounded-xl text-xs font-bold bg-white/60 text-purple-700 border border-lila-200"> Ganancias </button>
     </div>
     <div id="citas-content"></div>
    </div>
@@ -1008,7 +1022,14 @@
       const c = document.getElementById('citas-content');
 
       if (currentCitasTab === 'agendadas') {
-        const citas = allAppointments.filter(a => a.status === 'agendada').sort((a, b) => a.created_at > b.created_at ? 1 : -1);
+        const citas = allAppointments.filter(a => a.status === 'agendada').sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+          if (dateA !== dateB) return dateA - dateB;
+          const timeA = TIMES.indexOf(a.time);
+          const timeB = TIMES.indexOf(b.time);
+          return timeA - timeB;
+        });
         
         if (!citas.length) {
           c.innerHTML = '<p class="text-center text-purple-400 text-sm py-8">No hay citas agendadas</p>';
@@ -1411,5 +1432,5 @@
     initGrids();
     loadAppointments();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f872c140464f7b4',t:'MTc3ODIyOTc1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f873af431958e1b',t:'MTc3ODIzMDM2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
