@@ -1,0 +1,1161 @@
+<!doctype html>
+<html lang="es" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Aura Bella</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lilac: {
+              50: '#faf5ff',
+              100: '#f3e8ff',
+              200: '#e9d5ff',
+              300: '#d8b4fe',
+              400: '#c084fc',
+              500: '#a855f7',
+              600: '#9333ea'
+            },
+            baby: {
+              light: '#f5eeff',
+              main: '#e8d6ff',
+              dark: '#d4b3ff',
+              accent: '#b87aff'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      box-sizing: border-box;
+    }
+
+    .font-display {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+    }
+
+    .btn-active {
+      background: linear-gradient(135deg, #d8b4fe, #b87aff);
+      color: white;
+      transform: scale(1.02);
+      box-shadow: 0 4px 15px rgba(184,122,255,0.3);
+    }
+
+    .fade-in {
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity:0;
+        transform:translateY(10px);
+      }
+
+      to {
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    .nav-btn {
+      transition: all 0.2s;
+    }
+
+    .nav-btn:hover {
+      background: rgba(216,180,254,0.3);
+    }
+
+    .nav-btn.active {
+      background: linear-gradient(135deg, #d8b4fe, #b87aff);
+      color: white;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+  </style>
+</head>
+
+<body class="h-full bg-gradient-to-br from-baby-light via-white to-lilac-100 overflow-auto">
+
+<div id="app" class="w-full min-h-full flex flex-col">
+
+  <!-- Header -->
+  <header class="text-center py-6 px-4">
+    <h1 id="salon-title" class="font-display text-3xl md:text-4xl font-bold text-lilac-600">
+      ✨ Aura Bella ✨
+    </h1>
+
+    <p class="text-lilac-400 text-sm mt-1">
+      Nail Studio
+    </p>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="flex justify-center gap-2 px-4 pb-4 flex-wrap">
+
+    <button
+      onclick="showPage('calculator')"
+      class="nav-btn active px-4 py-2 rounded-full text-sm font-semibold"
+      id="nav-calc"
+    >
+      💅 Calculadora
+    </button>
+
+    <button
+      onclick="showPage('agenda')"
+      class="nav-btn px-4 py-2 rounded-full text-sm font-semibold"
+      id="nav-agenda"
+    >
+      📅 Agenda
+    </button>
+
+    <button
+      onclick="showPage('citas')"
+      class="nav-btn px-4 py-2 rounded-full text-sm font-semibold"
+      id="nav-citas"
+    >
+      📋 Citas
+    </button>
+
+  </nav>
+
+  <!-- Pages -->
+  <main class="flex-1 px-4 pb-8">
+
+    <!-- CALCULATOR PAGE -->
+    <div id="page-calculator" class="max-w-lg mx-auto fade-in">
+
+      <!-- Technique Selection -->
+      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
+
+        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
+          1. Elige tu técnica
+        </h2>
+
+        <div class="grid grid-cols-2 gap-2" id="technique-btns">
+
+          <button onclick="selectTechnique(event,'softgel')" class="tech-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold hover:border-lilac-400 transition-all">
+            Soft Gel
+          </button>
+
+          <button onclick="selectTechnique(event,'semipermanente')" class="tech-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold hover:border-lilac-400 transition-all">
+            Gel Semipermanente
+          </button>
+
+          <button onclick="selectTechnique(event,'rubber')" class="tech-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold hover:border-lilac-400 transition-all">
+            Rubber Gel
+            <br>
+            <span class="text-xs text-lilac-400">$50.000</span>
+          </button>
+
+          <button onclick="selectTechnique(event,'builder')" class="tech-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold hover:border-lilac-400 transition-all">
+            Builder Gel
+            <br>
+            <span class="text-xs text-lilac-400">$60.000</span>
+          </button>
+
+          <button onclick="selectTechnique(event,'pedicure')" class="tech-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold hover:border-lilac-400 transition-all col-span-2">
+            Pedicure Spa
+            <br>
+            <span class="text-xs text-lilac-400">$20.000</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Sub Options -->
+      <div id="sub-options" class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100 hidden fade-in">
+
+        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
+          2. Opciones
+        </h2>
+
+        <div id="sub-options-content"></div>
+      </div>
+
+      <!-- Decorations -->
+      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
+
+        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
+          3. Decoraciones (por uña)
+        </h2>
+
+        <p class="text-xs text-lilac-400 mb-3">
+          Incluye 2 tonos lisos. Cada decoración extra tiene costo adicional.
+        </p>
+
+        <div class="space-y-2" id="decorations-list"></div>
+
+        <!-- Extra tones -->
+        <div class="mt-4 pt-4 border-t border-lilac-100">
+
+          <div class="flex items-center justify-between">
+
+            <span class="text-sm font-semibold text-lilac-600">
+              Tonos extra ($1.000 c/u)
+            </span>
+
+            <div class="flex items-center gap-2">
+
+              <button onclick="changeTones(-1)" class="w-7 h-7 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-600 font-bold">
+                -
+              </button>
+
+              <span id="extra-tones" class="font-bold text-lilac-600">
+                0
+              </span>
+
+              <button onclick="changeTones(1)" class="w-7 h-7 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-600 font-bold">
+                +
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Shape -->
+        <div class="mt-3 pt-3 border-t border-lilac-100">
+
+          <div class="flex items-center justify-between">
+
+            <span class="text-sm font-semibold text-lilac-600">
+              Cambio de forma ($6.000)
+            </span>
+
+            <button
+              onclick="toggleShape()"
+              id="shape-btn"
+              class="px-4 py-1 rounded-full border-2 border-lilac-200 text-sm font-semibold transition-all"
+            >
+              No
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Retiro -->
+      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
+
+        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
+          4. Retiro
+        </h2>
+
+        <div class="grid grid-cols-2 gap-2">
+
+          <button onclick="selectRetiro(event,'none')" class="retiro-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold btn-active">
+            Sin retiro
+          </button>
+
+          <button onclick="selectRetiro(event,'softgel')" class="retiro-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
+            Soft Gel
+            <br>
+            <span class="text-xs">$13.000</span>
+          </button>
+
+          <button onclick="selectRetiro(event,'semi')" class="retiro-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
+            Semipermanente
+            <br>
+            <span class="text-xs">$6.000</span>
+          </button>
+
+          <button onclick="selectRetiro(event,'rubber')" class="retiro-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
+            Rubber
+            <br>
+            <span class="text-xs">$8.000</span>
+          </button>
+
+          <button onclick="selectRetiro(event,'builder')" class="retiro-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold col-span-2">
+            Builder Gel
+            <br>
+            <span class="text-xs">$8.000</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Total -->
+      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border-2 border-lilac-300">
+
+        <div class="text-center">
+
+          <p class="text-sm text-lilac-400">
+            Total estimado
+          </p>
+
+          <p id="total-price" class="font-display text-3xl font-bold text-lilac-600 mt-1">
+            $0
+          </p>
+
+        </div>
+
+        <button
+          onclick="goToAgendaWithPrice()"
+          class="w-full mt-4 py-3 rounded-xl bg-gradient-to-r from-lilac-300 to-baby-accent text-white font-bold shadow-lg hover:shadow-xl transition-all"
+        >
+          📅 Agendar Cita
+        </button>
+
+      </div>
+    </div>
+
+    <!-- AGENDA -->
+    <div id="page-agenda" class="max-w-lg mx-auto hidden fade-in">
+
+      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
+
+        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
+          📅 Calendario 2026
+        </h2>
+
+        <div class="flex items-center justify-between mb-3">
+
+          <button onclick="changeMonth(-1)" class="p-2 rounded-full hover:bg-lilac-100">
+            <i data-lucide="chevron-left" class="w-5 h-5 text-lilac-600"></i>
+          </button>
+
+          <span id="month-label" class="font-bold text-lilac-600"></span>
+
+          <button onclick="changeMonth(1)" class="p-2 rounded-full hover:bg-lilac-100">
+            <i data-lucide="chevron-right" class="w-5 h-5 text-lilac-600"></i>
+          </button>
+
+        </div>
+
+        <div class="grid grid-cols-7 gap-1 text-center text-xs mb-1">
+          <span class="text-lilac-400 font-semibold">Do</span>
+          <span class="text-lilac-400 font-semibold">Lu</span>
+          <span class="text-lilac-400 font-semibold">Ma</span>
+          <span class="text-lilac-400 font-semibold">Mi</span>
+          <span class="text-lilac-400 font-semibold">Ju</span>
+          <span class="text-lilac-400 font-semibold">Vi</span>
+          <span class="text-lilac-400 font-semibold">Sa</span>
+        </div>
+
+        <div id="calendar-grid" class="grid grid-cols-7 gap-1"></div>
+
+      </div>
+
+      <!-- Time -->
+      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
+
+        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
+          🕐 Horario
+        </h2>
+
+        <div class="grid grid-cols-3 gap-2">
+
+          <button onclick="selectTime(event,'8:00 am')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">8:00 am</button>
+
+          <button onclick="selectTime(event,'10:00 am')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">10:00 am</button>
+
+          <button onclick="selectTime(event,'12:00 pm')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">12:00 pm</button>
+
+          <button onclick="selectTime(event,'2:00 pm')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">2:00 pm</button>
+
+          <button onclick="selectTime(event,'4:00 pm')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">4:00 pm</button>
+
+          <button onclick="selectTime(event,'6:00 pm')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold">6:00 pm</button>
+
+          <button onclick="selectTime(event,'8:00 pm')" class="time-btn p-2 rounded-xl border-2 border-lilac-200 text-sm font-semibold col-span-3">8:00 pm</button>
+
+        </div>
+      </div>
+
+      <!-- Client Info -->
+      <div class="glass rounded-2xl p-5 mb-4 shadow-lg border border-lilac-100">
+
+        <h2 class="font-display text-lg font-bold text-lilac-600 mb-3">
+          👤 Datos del Cliente
+        </h2>
+
+        <div class="space-y-3">
+
+          <div>
+            <label class="text-sm font-semibold text-lilac-500">
+              Nombre
+            </label>
+
+            <input
+              id="client-name"
+              type="text"
+              class="w-full mt-1 p-3 rounded-xl border-2 border-lilac-200 focus:border-lilac-400 outline-none"
+              placeholder="Nombre del cliente"
+            >
+          </div>
+
+          <div>
+            <label class="text-sm font-semibold text-lilac-500">
+              Número de contacto
+            </label>
+
+            <input
+              id="client-phone"
+              type="text"
+              class="w-full mt-1 p-3 rounded-xl border-2 border-lilac-200 focus:border-lilac-400 outline-none"
+              placeholder="Teléfono"
+            >
+          </div>
+
+          <div>
+            <label class="text-sm font-semibold text-lilac-500">
+              Costo/Precio
+            </label>
+
+            <input
+              id="appt-price"
+              type="text"
+              class="w-full mt-1 p-3 rounded-xl border-2 border-lilac-200 bg-lilac-50 outline-none"
+              readonly
+            >
+          </div>
+
+          <div>
+            <label class="text-sm font-semibold text-lilac-500">
+              Anticipo
+            </label>
+
+            <input
+              id="appt-advance"
+              type="number"
+              class="w-full mt-1 p-3 rounded-xl border-2 border-lilac-200 focus:border-lilac-400 outline-none"
+              placeholder="$0"
+            >
+          </div>
+
+        </div>
+
+        <button
+          onclick="confirmAppointment()"
+          id="confirm-btn"
+          class="w-full mt-4 py-3 rounded-xl bg-gradient-to-r from-lilac-300 to-baby-accent text-white font-bold shadow-lg hover:shadow-xl transition-all"
+        >
+          ✅ Confirmar Cita
+        </button>
+
+        <p id="confirm-msg" class="text-center text-sm mt-2 text-green-500 font-semibold hidden"></p>
+
+      </div>
+    </div>
+
+    <!-- CITAS -->
+    <div id="page-citas" class="max-w-lg mx-auto hidden fade-in">
+
+      <div class="flex gap-2 mb-4">
+
+        <button onclick="showCitasTab('agendadas')" id="tab-agendadas" class="flex-1 py-2 rounded-xl text-sm font-bold nav-btn active">
+          Agendadas
+        </button>
+
+        <button onclick="showCitasTab('realizadas')" id="tab-realizadas" class="flex-1 py-2 rounded-xl text-sm font-bold nav-btn">
+          Realizadas
+        </button>
+
+        <button onclick="showCitasTab('ganancias')" id="tab-ganancias" class="flex-1 py-2 rounded-xl text-sm font-bold nav-btn">
+          Ganancias
+        </button>
+
+      </div>
+
+      <div id="citas-content" class="space-y-3"></div>
+
+    </div>
+
+  </main>
+</div>
+
+<script>
+
+  // =========================
+  // STATE
+  // =========================
+
+  let currentPage = 'calculator';
+  let selectedTechnique = null;
+  let selectedSubOption = null;
+  let techniquePrice = 0;
+  let decorations = {};
+  let extraTones = 0;
+  let shapeChange = false;
+  let selectedRetiro = 'none';
+  let retiroPrice = 0;
+  let selectedDate = null;
+  let selectedTime = null;
+  let currentMonth = 0;
+  let currentYear = 2026;
+
+  // LOCAL STORAGE
+  let allAppointments = JSON.parse(localStorage.getItem('appointments')) || [];
+
+  const retiroPrices = {
+    none: 0,
+    softgel: 13000,
+    semi: 6000,
+    rubber: 8000,
+    builder: 8000
+  };
+
+  const decorationsList = [
+    { id:'espejo', name:'Espejo', price:2000 },
+    { id:'aurora', name:'Aurora', price:2000 },
+    { id:'perla', name:'Perla', price:2000 },
+    { id:'carey', name:'Carey', price:5000 },
+    { id:'blooming', name:'Blooming', price:5000 },
+    { id:'ojogato', name:'Ojo de gato', price:3000 },
+    { id:'relievecomp', name:'Relieve complicado', price:8000 },
+    { id:'relievesimp', name:'Relieve simple', price:5000 },
+    { id:'3d', name:'3D', price:10000 },
+    { id:'frances', name:'Francés', price:1000 },
+    { id:'nailsimple', name:'Nail art simple', price:2000 },
+    { id:'nailcomp', name:'Nail art complicado', price:8000 },
+    { id:'encapsulado', name:'Encapsulado', price:8000 },
+    { id:'naturaleza', name:'Naturaleza muerta', price:5000 },
+    { id:'dijes', name:'Dijes', price:8000 },
+    { id:'stikers', name:'Stikers', price:1000 },
+    { id:'babyboomer', name:'Baby boomer', price:10000 },
+    { id:'spider', name:'Gel spider', price:2000 },
+    { id:'hojaoro', name:'Hoja de oro', price:2000 }
+  ];
+
+  // =========================
+  // DECORATIONS
+  // =========================
+
+  function renderDecorations() {
+
+    const container = document.getElementById('decorations-list');
+
+    container.innerHTML = decorationsList.map(d => `
+      <div class="flex items-center justify-between py-2 px-3 rounded-lg hover:bg-lilac-50 transition-all">
+
+        <div>
+          <span class="text-sm font-semibold text-gray-700">
+            ${d.name}
+          </span>
+
+          <span class="text-xs text-lilac-400 ml-2">
+            $${d.price.toLocaleString()}/uña
+          </span>
+        </div>
+
+        <div class="flex items-center gap-2">
+
+          <button onclick="changeDeco('${d.id}',-1)" class="w-6 h-6 rounded-full bg-lilac-100 flex items-center justify-center text-lilac-600 font-bold text-xs">
+            -
+          </button>
+
+          <span id="deco-${d.id}" class="text-sm font-bold text-lilac-600 w-4 text-center">
+            0
+          </span>
+
+          <button onclick="changeDeco('${d.id}',1)" class="w-6 h-6 rounded-full bg-lilac-200 flex items-center justify-center text-lilac-600 font-bold text-xs">
+            +
+          </button>
+
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function changeDeco(id, delta) {
+
+    if (!decorations[id]) {
+      decorations[id] = 0;
+    }
+
+    decorations[id] = Math.max(0, decorations[id] + delta);
+
+    document.getElementById(`deco-${id}`).textContent = decorations[id];
+
+    calculateTotal();
+  }
+
+  function changeTones(delta) {
+
+    extraTones = Math.max(0, extraTones + delta);
+
+    document.getElementById('extra-tones').textContent = extraTones;
+
+    calculateTotal();
+  }
+
+  function toggleShape() {
+
+    shapeChange = !shapeChange;
+
+    const btn = document.getElementById('shape-btn');
+
+    if (shapeChange) {
+      btn.textContent = 'Sí';
+      btn.classList.add('btn-active');
+    } else {
+      btn.textContent = 'No';
+      btn.classList.remove('btn-active');
+    }
+
+    calculateTotal();
+  }
+
+  // =========================
+  // TECHNIQUES
+  // =========================
+
+  function selectTechnique(e, tech) {
+
+    selectedTechnique = tech;
+    selectedSubOption = null;
+
+    document.querySelectorAll('.tech-btn').forEach(btn => {
+      btn.classList.remove('btn-active');
+    });
+
+    e.currentTarget.classList.add('btn-active');
+
+    const subDiv = document.getElementById('sub-options');
+    const content = document.getElementById('sub-options-content');
+
+    if (tech === 'softgel') {
+
+      subDiv.classList.remove('hidden');
+
+      content.innerHTML = `
+        <p class="text-sm text-lilac-400 mb-2">
+          Selecciona el largo:
+        </p>
+
+        <div class="grid grid-cols-2 gap-2">
+
+          <button onclick="selectSub(event,'l1',70000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
+            Largo 1
+            <br>
+            <span class="text-xs text-lilac-400">$70.000</span>
+          </button>
+
+          <button onclick="selectSub(event,'l2',71000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
+            Largo 2
+            <br>
+            <span class="text-xs text-lilac-400">$71.000</span>
+          </button>
+
+          <button onclick="selectSub(event,'l3',72000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
+            Largo 3
+            <br>
+            <span class="text-xs text-lilac-400">$72.000</span>
+          </button>
+
+          <button onclick="selectSub(event,'l4',73000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
+            Largo 4
+            <br>
+            <span class="text-xs text-lilac-400">$73.000</span>
+          </button>
+
+        </div>
+      `;
+
+      techniquePrice = 0;
+
+    } else if (tech === 'semipermanente') {
+
+      subDiv.classList.remove('hidden');
+
+      content.innerHTML = `
+        <div class="grid grid-cols-2 gap-2">
+
+          <button onclick="selectSub(event,'manos',40000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
+            Manos
+            <br>
+            <span class="text-xs text-lilac-400">$40.000</span>
+          </button>
+
+          <button onclick="selectSub(event,'pies',38000)" class="sub-btn p-3 rounded-xl border-2 border-lilac-200 text-sm font-semibold">
+            Pies
+            <br>
+            <span class="text-xs text-lilac-400">$38.000</span>
+          </button>
+
+        </div>
+      `;
+
+      techniquePrice = 0;
+
+    } else {
+
+      subDiv.classList.add('hidden');
+
+      if (tech === 'rubber') {
+        techniquePrice = 50000;
+      }
+
+      if (tech === 'builder') {
+        techniquePrice = 60000;
+      }
+
+      if (tech === 'pedicure') {
+        techniquePrice = 20000;
+      }
+    }
+
+    calculateTotal();
+  }
+
+  function selectSub(e, option, price) {
+
+    selectedSubOption = option;
+    techniquePrice = price;
+
+    document.querySelectorAll('.sub-btn').forEach(btn => {
+      btn.classList.remove('btn-active');
+    });
+
+    e.currentTarget.classList.add('btn-active');
+
+    calculateTotal();
+  }
+
+  function selectRetiro(e, type) {
+
+    selectedRetiro = type;
+    retiroPrice = retiroPrices[type];
+
+    document.querySelectorAll('.retiro-btn').forEach(btn => {
+      btn.classList.remove('btn-active');
+    });
+
+    e.currentTarget.classList.add('btn-active');
+
+    calculateTotal();
+  }
+
+  // =========================
+  // TOTAL
+  // =========================
+
+  function calculateTotal() {
+
+    let total = techniquePrice + retiroPrice;
+
+    for (const [id, count] of Object.entries(decorations)) {
+
+      const deco = decorationsList.find(x => x.id === id);
+
+      if (deco) {
+        total += deco.price * count;
+      }
+    }
+
+    total += extraTones * 1000;
+
+    if (shapeChange) {
+      total += 6000;
+    }
+
+    document.getElementById('total-price').textContent =
+      '$' + total.toLocaleString();
+
+    return total;
+  }
+
+  function goToAgendaWithPrice() {
+
+    const total = calculateTotal();
+
+    showPage('agenda');
+
+    document.getElementById('appt-price').value =
+      '$' + total.toLocaleString();
+  }
+
+  // =========================
+  // PAGES
+  // =========================
+
+  function showPage(page) {
+
+    currentPage = page;
+
+    document.getElementById('page-calculator').classList.add('hidden');
+    document.getElementById('page-agenda').classList.add('hidden');
+    document.getElementById('page-citas').classList.add('hidden');
+
+    document.getElementById(`page-${page}`).classList.remove('hidden');
+
+    document.querySelectorAll('nav button').forEach(btn => {
+      btn.classList.remove('active');
+    });
+
+    if (page === 'calculator') {
+      document.getElementById('nav-calc').classList.add('active');
+    }
+
+    if (page === 'agenda') {
+      document.getElementById('nav-agenda').classList.add('active');
+      renderCalendar();
+    }
+
+    if (page === 'citas') {
+      document.getElementById('nav-citas').classList.add('active');
+      showCitasTab('agendadas');
+    }
+
+    lucide.createIcons();
+  }
+
+  // =========================
+  // CALENDAR
+  // =========================
+
+  function renderCalendar() {
+
+    const grid = document.getElementById('calendar-grid');
+
+    const date = new Date(currentYear, currentMonth, 1);
+
+    const monthNames = [
+      'Enero','Febrero','Marzo','Abril',
+      'Mayo','Junio','Julio','Agosto',
+      'Septiembre','Octubre','Noviembre','Diciembre'
+    ];
+
+    document.getElementById('month-label').textContent =
+      monthNames[currentMonth] + ' ' + currentYear;
+
+    const firstDay = date.getDay();
+
+    const daysInMonth =
+      new Date(currentYear, currentMonth + 1, 0).getDate();
+
+    let html = '';
+
+    for (let i = 0; i < firstDay; i++) {
+      html += '<div></div>';
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+
+      const dateStr =
+        `${currentYear}-${String(currentMonth + 1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+
+      const isSelected = selectedDate === dateStr;
+
+      html += `
+        <button
+          onclick="selectDate('${dateStr}')"
+          class="p-1 text-sm rounded-lg transition-all ${isSelected ? 'btn-active' : 'hover:bg-lilac-100 text-gray-700'}"
+        >
+          ${d}
+        </button>
+      `;
+    }
+
+    grid.innerHTML = html;
+  }
+
+  function changeMonth(delta) {
+
+    currentMonth += delta;
+
+    if (currentMonth > 11) {
+      currentMonth = 0;
+      currentYear++;
+    }
+
+    if (currentMonth < 0) {
+      currentMonth = 11;
+      currentYear--;
+    }
+
+    renderCalendar();
+  }
+
+  function selectDate(date) {
+
+    selectedDate = date;
+
+    renderCalendar();
+  }
+
+  function selectTime(e, time) {
+
+    selectedTime = time;
+
+    document.querySelectorAll('.time-btn').forEach(btn => {
+      btn.classList.remove('btn-active');
+    });
+
+    e.currentTarget.classList.add('btn-active');
+  }
+
+  // =========================
+  // APPOINTMENTS
+  // =========================
+
+  function saveAppointments() {
+
+    localStorage.setItem(
+      'appointments',
+      JSON.stringify(allAppointments)
+    );
+  }
+
+  function confirmAppointment() {
+
+    const name =
+      document.getElementById('client-name').value.trim();
+
+    const phone =
+      document.getElementById('client-phone').value.trim();
+
+    const price =
+      document.getElementById('appt-price').value;
+
+    const advance =
+      parseInt(document.getElementById('appt-advance').value) || 0;
+
+    if (!name || !selectedDate || !selectedTime) {
+
+      const msg = document.getElementById('confirm-msg');
+
+      msg.textContent =
+        '⚠️ Completa nombre, fecha y hora';
+
+      msg.classList.remove('hidden');
+
+      return;
+    }
+
+    const appointment = {
+
+      id: Date.now(),
+
+      client_name: name,
+
+      client_phone: phone,
+
+      date: selectedDate,
+
+      time: selectedTime,
+
+      technique:
+        selectedTechnique +
+        (selectedSubOption ? ' - ' + selectedSubOption : ''),
+
+      details: price,
+
+      total_price: calculateTotal(),
+
+      advance_payment: advance,
+
+      status: 'agendada'
+    };
+
+    allAppointments.push(appointment);
+
+    saveAppointments();
+
+    document.getElementById('confirm-msg').textContent =
+      '✅ ¡Cita agendada con éxito!';
+
+    document.getElementById('confirm-msg').classList.remove('hidden');
+
+    document.getElementById('client-name').value = '';
+    document.getElementById('client-phone').value = '';
+    document.getElementById('appt-advance').value = '';
+
+    selectedDate = null;
+    selectedTime = null;
+  }
+
+  // =========================
+  // CITAS
+  // =========================
+
+  function showCitasTab(tab) {
+
+    document.getElementById('tab-agendadas').classList.remove('active');
+    document.getElementById('tab-realizadas').classList.remove('active');
+    document.getElementById('tab-ganancias').classList.remove('active');
+
+    document.getElementById(`tab-${tab}`).classList.add('active');
+
+    renderCitasContent(tab);
+  }
+
+  function renderCitasContent(tab) {
+
+    const container =
+      document.getElementById('citas-content');
+
+    if (tab === 'agendadas') {
+
+      const agendadas =
+        allAppointments.filter(a => a.status === 'agendada');
+
+      if (!agendadas.length) {
+
+        container.innerHTML = `
+          <div class="glass rounded-2xl p-6 text-center text-lilac-400">
+            No hay citas agendadas
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML = agendadas.map(a => `
+        <div class="glass rounded-2xl p-4 shadow border border-lilac-100">
+
+          <div class="flex justify-between items-start">
+
+            <div>
+
+              <p class="font-bold text-lilac-600">
+                ${a.client_name}
+              </p>
+
+              <p class="text-xs text-lilac-400">
+                ${a.date} • ${a.time}
+              </p>
+
+              <p class="text-xs text-gray-500 mt-1">
+                ${a.technique}
+              </p>
+
+              <p class="text-sm font-semibold text-lilac-500 mt-1">
+                ${a.details}
+              </p>
+
+            </div>
+
+            <button
+              onclick="markDone(${a.id})"
+              class="px-3 py-1 rounded-full bg-green-100 text-green-600 text-xs font-bold"
+            >
+              ✓ Hecha
+            </button>
+
+          </div>
+        </div>
+      `).join('');
+
+    } else if (tab === 'realizadas') {
+
+      const realizadas =
+        allAppointments.filter(a => a.status === 'realizada');
+
+      if (!realizadas.length) {
+
+        container.innerHTML = `
+          <div class="glass rounded-2xl p-6 text-center text-lilac-400">
+            No hay citas realizadas
+          </div>
+        `;
+
+        return;
+      }
+
+      container.innerHTML = realizadas.map(a => `
+        <div class="glass rounded-2xl p-4 shadow border border-lilac-100 opacity-80">
+
+          <p class="font-bold text-lilac-600">
+            ${a.client_name}
+          </p>
+
+          <p class="text-xs text-lilac-400">
+            ${a.date} • ${a.time}
+          </p>
+
+          <p class="text-sm font-semibold text-green-500 mt-1">
+            ${a.details}
+          </p>
+
+        </div>
+      `).join('');
+
+    } else {
+
+      const realizadas =
+        allAppointments.filter(a => a.status === 'realizada');
+
+      let total = 0;
+
+      realizadas.forEach(a => {
+        total += a.total_price;
+      });
+
+      container.innerHTML = `
+        <div class="glass rounded-2xl p-5 shadow border border-lilac-100">
+
+          <h3 class="font-display text-lg font-bold text-lilac-600 text-center mb-4">
+            💰 Ganancias
+          </h3>
+
+          <div class="bg-gradient-to-r from-lilac-200 to-lilac-100 p-4 rounded-xl text-center">
+
+            <p class="text-xs text-lilac-400">
+              Total generado
+            </p>
+
+            <p class="font-bold text-2xl text-lilac-600">
+              $${total.toLocaleString()}
+            </p>
+
+          </div>
+
+          <p class="text-center text-xs text-lilac-400 mt-3">
+            ${realizadas.length} citas realizadas
+          </p>
+
+        </div>
+      `;
+    }
+  }
+
+  function markDone(id) {
+
+    const appointment =
+      allAppointments.find(a => a.id === id);
+
+    if (!appointment) return;
+
+    appointment.status = 'realizada';
+
+    saveAppointments();
+
+    showCitasTab('agendadas');
+  }
+
+  // =========================
+  // INIT
+  // =========================
+
+  renderDecorations();
+  renderCalendar();
+  lucide.createIcons();
+
+</script>
+
+</body>
+</html>
